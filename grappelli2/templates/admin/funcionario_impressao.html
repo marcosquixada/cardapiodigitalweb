@@ -1,0 +1,16 @@
+<tr class="page-break"> 
+  <td>{{ funcionario.nome|upper }}</td> 
+  <td>{{ funcionario.cargo|upper}}</td> 
+  <td>
+    <table class="table table-bordered table-condensed">
+      <thead>
+          {% for presenca in presencas %}
+            <tr>
+              {{ presenca|safe }}
+            </tr>
+          {% endfor %}
+        </tr>
+      </thead>
+    </table>
+  </td>
+</tr>

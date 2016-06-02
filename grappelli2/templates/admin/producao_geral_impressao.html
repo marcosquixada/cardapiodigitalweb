@@ -1,0 +1,134 @@
+{% extends "admin/base_site.html" %}
+{% load admin_static %}
+<!-- LOADING -->
+{% load i18n grp_tags leal_tags log %}
+
+{% block stylesheets %}
+        <!-- Bootstrap core CSS -->
+    <link href="{% static "admin/css/bootstrap.min.css" %}" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="{% static "admin/css/ie10-viewport-bug-workaround.css" %}" rel="stylesheet">
+
+    <link href="{% static "grappelli/stylesheets/screen.css" %}" rel="stylesheet" type="text/css" media="screen">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static "admin/css/estilos.css" %}"  rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="{% static "assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="{% static "js/ie-emulation-modes-warning.js" %}" ></script>
+
+    <style type="text/css">
+       table { page-break-inside:auto }
+       tr, th{ page-break-inside:always; page-break-after:always; }
+       table.page-break, tr.page-break{page-break-after:always}
+       table.page-break-before, tr.page-break-before{page-break-before:always}
+       @media all {
+         .cabecalho { display: block;}
+        }
+
+        @media print {
+         .cabecalho { display: none;}
+        }
+    </style>
+
+{{ block.super }}
+{% endblock %}
+
+<!-- JAVASCRIPTS -->
+{% block javascripts %}
+<!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="{% static "assets/js/vendor/jquery.min.js" %}"><\/script>')</script>
+    <script src="{% static "dist/js/bootstrap.min.js" %}></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="{% static "assets/js/ie10-viewport-bug-workaround.js"%}""></script>
+    {{ block.super }}
+{% endblock %}
+
+<!-- COLTYPE/BODYCLASS-- >
+{% block bodyclass %}dashboard{% endblock %}
+{% block content-class %}content-grid{% endblock %}
+
+{% block navbar %}
+<ul class="nav navbar-nav navbar-inverse cabecalho">
+{% for app in app_list %}
+
+<li class="dropdown cabecalho">
+<a href="#" class="dropdown-toggle cabecalho" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+    {% ifequal app.name 'Auth'%}
+        Autenticação 
+    {% else %}
+        {% ifequal app.name 'Rh'%}
+            Recursos Humanos
+        {% else %}
+            {% trans app.name %}
+        {% endifequal %}
+    {% endifequal %}<b class="caret"></b>
+</a>
+
+<ul class="dropdown-menu cabecalho">
+    {% for model in app.models %}
+    <li><a href="{{ model.admin_url }}">{{ model.name }}</a></li>
+    {% endfor %}
+</ul>
+</li>
+{% endfor %} 
+</ul>
+{% endblock %}
+<!-- BREADCRUMBS -->
+{% block breadcrumbs %}
+    <ul class="grp-horizontal-list cabecalho">
+        <li><a href="/lealmoreira/admin/servico/servico/">Serviços</a></li>
+        <li>Relatório de Produção</li>
+    </ul>
+{% endblock %}
+{% block content_title %}
+    {% if title %}
+        <header class="cabecalho"><h1>BEM VINDO</h1></header>
+    {% endif %}
+{% endblock %}
+
+<!-- CONTENT -->
+{% block content %}
+    <div class="cabecalho">
+      Selecione o periodo: 
+      <form name="periodo" method="get">
+        <select name="mes">
+          <option value="1">Janeiro</option>
+          <option value="2">Fevereiro</option>
+          <option value="3">Março</option>
+          <option value="4">Abril</option>
+          <option value="5">Maio</option>
+          <option value="6">Junho</option>
+          <option value="7">Julho</option>
+          <option value="8">Agosto</option>
+          <option value="9">Setembro</option>
+          <option value="10">Outubro</option>
+          <option value="11">Novembro</option>
+          <option value="12">Dezembro</option>
+        </select>
+        <select name="ano">
+          {% for ano in anos %}
+            <option value="{{ano}}">{{ano}}</option>
+          {% endfor %}
+        </select>
+        <button type="submit" class="btn-primary" style="width:100px; margin-left:20px">Enviar dados</button>
+        {% if servicos %}
+          <input type="button" onClick="window.print()" value="Imprimir"/>
+        {% endif %}
+    </div>
+    <div class="container-fluid principal impressao">
+      {% if servicos %}
+        <img  style="float:left" src='http://lealmoreira.planegis.com.br/static/admin/img/logo-lealmoreira_azul.png'  width="150px"/><br>
+        <div align="center"><h3>Relatório de produção</h3></div>
+        <br><br>
+      {% endif %}
+      {% for servico in servicos %}
+        {% producao request servico %}
+      {% endfor %}
+    </div>
+{% endblock %}

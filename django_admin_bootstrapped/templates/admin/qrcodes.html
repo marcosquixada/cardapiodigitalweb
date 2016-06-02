@@ -1,0 +1,34 @@
+{% extends "admin/base_site.html" %}
+{% load qr_tags %}
+{% load i18n admin_static bootstrapped_goodies_tags %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "admin/css/dashboard.css" %}" />{% endblock %}
+
+{% block coltype %}colMS{% endblock %}
+
+{% block bodyclass %}{{ block.super }} dashboard{% endblock %}
+
+{% block breadcrumbs %}
+<ul class="breadcrumb">
+<li><a href="{% url 'admin:index' %}">{% trans 'Home' %}</a></li>
+<li>QrCode</li>
+</ul>
+{% endblock %}
+
+{% block content-navbar-collapse %}
+{% endblock %}
+
+{% block object-tools %}
+{% endblock %}
+
+{% block container-top %}<div class="col-md-12">{% endblock %}
+{% block container-bottom %}</div>{% endblock %}
+
+{% block content %}
+{% for mesa in mesas %}
+	<div class="row">
+		<div class="col-md-6">{{mesa.mesa}}</div>
+		<div class="col-md-6">{% qr_from_text mesa.qrcode "200" %}</div>
+	</div>
+{% endfor %}
+{% endblock %}

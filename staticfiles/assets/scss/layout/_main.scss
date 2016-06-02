@@ -1,0 +1,100 @@
+// Main
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  margin-bottom: 60px;
+  @media (max-width: $screen-sm-max) {
+    margin-bottom: 100px;
+  }
+}
+
+.scrollable-menu {
+  height: auto;
+  max-height: 200px;
+  overflow-x: hidden;
+}
+
+a {
+  @include transition(all 0.3s ease);
+  color: darken(#fff, 20%);
+}
+
+.header-content {
+  .title {
+    font-size: $font-size-h3;
+  }
+}
+
+.main section {
+  padding: 30px 0;
+}
+
+.panel-title {
+  font-size: $font-size-base;
+}
+.panel-body {
+
+
+  // .panel-body-title:first-letter {
+  //   text-transform: uppercase;
+  // }
+}
+
+.panel-control {
+  padding: 0;
+  @include clearfix;
+
+  .panel-title {
+    float: left;
+  }
+  .panel-icon,
+  .panel-right {
+    padding: $panel-heading-padding;
+    background-color: $blue-light;
+  }
+
+  .panel-icon {
+    margin-right: 10px;
+    padding-bottom: 14px;
+  }
+  .panel-right {
+    float: right;
+    padding: 0;
+
+    .btn {
+      @extend .btn-primary;
+      @include border-radius(0);
+      background-color: $blue-light;
+      border: none;
+      padding: 10px 15px;
+    }
+
+    .dropdown-menu {
+      background-color: transparent;
+      border:none;
+      padding: 0;
+      @include box-shadow(0 2px 2px rgba(0,0,0,.175));
+    }
+
+  }
+
+  .dropdown {
+    a[data-toggle="dropdown"] {
+      color: #fff;
+    }
+  }
+}
+
+#logo-gov {
+  margin-right: 15px;
+}
+#logo-sec {
+  img {
+    max-width: 230px;
+  }
+
+}
+

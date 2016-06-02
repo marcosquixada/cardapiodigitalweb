@@ -1,0 +1,14 @@
+{% extends "admin/base_site.html" %}
+{% load url from future %}{% load i18n %}
+
+{% block breadcrumbs %}
+{% endblock %}
+{% block container-top %}<div class="col-md-12">{% endblock %}
+{% block container-bottom %}</div>{% endblock %}
+{% block content %}
+
+<p>Obrigado por visitar nosso sistema hoje.</p>
+
+<p><a href="{% url 'admin:index' %}" class="btn btn-default">{% trans 'Log in again' %}</a></p>
+
+{% endblock %}

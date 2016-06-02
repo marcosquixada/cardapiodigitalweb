@@ -1,0 +1,219 @@
+{% load admin_static %}{% load firstof from future %}{% load i18n grp_tags %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <meta charset="utf-8" />
+    {% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE" />{% endblock %}
+    <!-- STYLESHEETS -->
+    {% block stylesheets %}
+        <link href="{% static "grappelli/jquery/ui/css/custom-theme/jquery-ui-1.10.3.custom.min.css" %}" rel="stylesheet" type="text/css" media="screen" />
+        <link href="{% static "admin/css/style.css" %}" rel="stylesheet" type="text/css" media="screen" />
+        <link href="{% static "grappelli/stylesheets/screen.css" %}" rel="stylesheet" type="text/css" media="screen" />
+        {% if LANGUAGE_BIDI %}
+            <link href="{% static "grappelli/stylesheets/mueller/grid/output-rtl.css" %}" rel="stylesheet" type="text/css" media="screen" />
+            <link href="{% block stylesheet_rtl %}{% static "grappelli/stylesheets/rtl.css" %}{% endblock %}" rel="stylesheet" type="text/css" media="screen" />
+        {% else %}
+            <link href="{% static "grappelli/stylesheets/mueller/grid/output.css" %}" rel="stylesheet" type="text/css" media="screen" />
+        {% endif %}
+
+
+        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="{% static 'assets/images/favicons/apple-touch-icon-152x152-precomposed.png' %}">
+        <link rel="apple-touch-icon-precomposed" sizes="120x120" href="{% static 'assets/images/favicons/apple-touch-icon-120x120-precomposed.png' %}">
+        <link rel="apple-touch-icon-precomposed" sizes="76x76" href="{% static 'assets/images/favicons/apple-touch-icon-76x76-precomposed.png' %}">
+        <link rel="apple-touch-icon-precomposed" sizes="60x60" href="{% static 'assets/images/favicons/apple-touch-icon-60x60-precomposed.png' %}">
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{% static 'assets/images/favicons/apple-touch-icon-144x144-precomposed.png' %}">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{% static 'assets/images/favicons/apple-touch-icon-114x114-precomposed.png' %}">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{% static 'assets/images/favicons/apple-touch-icon-72x72-precomposed.png' %}">
+        <link rel="apple-touch-icon" sizes="57x57" href="{% static 'assets/images/favicons/apple-touch-icon.png' %}">
+        <link rel="icon" sizes="228x228" href="{% static 'assets/images/favicons/coast-icon-228x228.png' %}">
+        <link rel="shortcut icon" href="{% static 'assets/images/favicons/favicon.ico' %}">
+        <link rel="icon" type="image/png" sizes="64x64" href="{% static 'assets/images/favicons/favicon.png' %}">
+        <link rel="stylesheet" href="{% static 'assets/js/vendor/fancybox/jquery.fancybox.min.css' %}" type="text/css" media="screen" />
+
+    {% endblock %}
+    {% include 'admin/stylesheets.html' %}
+    <!-- EXTRASTYLES -->
+    {% block extrastyle %}{% endblock %}
+    <!-- JAVASCRIPTS -->
+    {% block javascripts %}
+        <script type="text/javascript">window.__admin_media_prefix__ = "{% filter escapejs %}{% static "grappelli/" %}{% endfilter %}";</script>
+        <script type="text/javascript">window.__admin_utc_offset__ = "{% filter escapejs %}{% now "Z" %}{% endfilter %}";</script>
+        <script type="text/javascript" charset="utf-8">
+            // GLOBALS
+            {% if LANGUAGE_CODE %}
+            var LANGUAGE_CODE = "{{ LANGUAGE_CODE }}";
+            console.log(LANGUAGE_CODE);
+            {% endif %}
+            var grappelli = {},
+                ADMIN_URL = "{% url 'admin:index' %}",
+                MODEL_URL_ARRAY = {% if user.is_staff %}{% get_content_types %}{% else %}[]{% endif %},
+                DATE_FORMAT = "{% get_date_format %}",
+                TIME_FORMAT = "{% get_time_format %}",
+                DATETIME_FORMAT = "{% get_datetime_format %}";
+        </script>
+        <!-- jQuery, jQuery-UI -->
+        
+         <script src="{% static "grappelli/jquery/jquery-1.9.1.min.js" %}" type="text/javascript"></script>
+
+        <script type="text/javascript" src="{% static 'assets/js/vendor/modernizr-2.8.3.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'bower_components/underscore/underscore.js' %}"></script>
+        
+         <script src="{% static "admin/js/bootstrap.min.js" %}" type="text/javascript"></script>
+        <script src="{% static "grappelli/jquery/ui/js/jquery-ui-1.10.3.custom.min.js" %}" type="text/javascript"></script>
+        {% if debug %}
+            <!-- Grappelli Main JS -->
+            <script src="{% static "grappelli/js/grappelli.js" %}" type="text/javascript"></script>
+            <!-- Grappelli jQuery Plugins, Widgets -->
+            <script src="{% static "grappelli/js/jquery.grp_collapsible.js" %}" type="text/javascript"></script>
+            <script src="{% static "grappelli/js/jquery.grp_collapsible_group.js" %}" type="text/javascript"></script>
+            <script src="{% static "grappelli/js/jquery.grp_timepicker.js" %}" type="text/javascript"></script>
+            <script src="{% static "grappelli/js/jquery.grp_related_fk.js" %}" type="text/javascript"></script>
+            <script src="{% static "grappelli/js/jquery.grp_related_m2m.js" %}" type="text/javascript"></script>
+            <script src="{% static "grappelli/js/jquery.grp_related_generic.js" %}" type="text/javascript"></script>
+            <script src="{% static "grappelli/js/jquery.grp_autocomplete_fk.js" %}" type="text/javascript"></script>
+            <script src="{% static "grappelli/js/jquery.grp_autocomplete_m2m.js" %}" type="text/javascript"></script>
+            <script src="{% static "grappelli/js/jquery.grp_autocomplete_generic.js" %}" type="text/javascript"></script>
+            <script src="{% static "grappelli/js/jquery.grp_inline.js" %}" type="text/javascript"></script>
+        {% else %}
+            <!-- Grappelli Minified -->
+            <script src="{% static "grappelli/js/grappelli.min.js" %}" type="text/javascript"></script>
+        {% endif %}
+
+      <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="{% static "assets/js/vendor/jquery.min.js" %}"><\/script>')</script>
+    <script src="{% static  'admin/js/bootstrap.min.js' %}"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="{% static "assets/js/ie10-viewport-bug-workaround.js" %}"></script>
+    
+        <script type="text/javascript" charset="utf-8">
+            (function($) {
+                $(document).ready(function() {
+                    $("#grp-navigation .grp-collapse").grp_collapsible();
+                });
+            })(grp.jQuery);
+        </script>
+    {% endblock %}
+    <!-- EXTRAHEAD -->
+    {% block extrahead %}{% endblock %}
+</head>
+<body class="{% if is_popup %}grp-popup {% endif %}{% block bodyclass %}{% endblock %}{% if LANGUAGE_BIDI %} rtl{% endif %}">
+    <div id="grp-container">
+
+        {% block header %}
+           
+             {% include 'admin/javascripts.html' %}
+             {% if not is_popup %}
+                 <header id="header" role="banner">
+                      <nav class="navbar-gov">
+                        <div class="container">
+                          <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                 <img src="/static/assets/images/logo-mq.png" />
+                              </a>
+                            </li>
+                          </ul>
+
+                          {% block user-tools %}
+                                {% if user.is_authenticated and user.is_staff %}
+                                    <ul class="nav navbar-nav navbar-right">
+                                        <li class="dropdown">
+                                             <a id="dLabel" data-target="#" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                                {% firstof user.get_short_name user.get_username %}
+                                                <span class="caret"></span>
+                                              </a>
+
+                                              <ul class="dropdown-menu" aria-labelledby="dLabel">
+                                                {% if user.has_usable_password %}
+                                                    <li><a href="{% url 'admin:password_change' %}" class="grp-change-password">{% trans 'Change password' %}</a></li>
+                                                {% endif %}
+                                                <li><a href="{% url 'admin:logout' %}" class="grp-logout">{% trans 'Log out' %}</a></li>
+                                                {% switch_user_dropdown %}
+                                              </ul>
+                                        </li>
+                                    </ul>
+                                {% endif %}
+                            {% endblock %}
+                            {% block nav-global %}{% endblock %}
+                        </div>
+                      </nav>
+
+                      <nav class="navbar-menu">
+                        <div class="container">
+                          <!-- Brand and toggle get grouped for better mobile display -->
+                          <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu" aria-expanded="false">
+                              <span class="sr-only">Toggle navigation</span>
+                              <span class="icon-bar top-bar"></span>
+                              <span class="icon-bar middle-bar"></span>
+                              <span class="icon-bar bottom-bar"></span>
+                            </button>
+                            <a class="navbar-brand" href="/" title="Portal de Execução Orçamentária
+                            do Estado de Alagoas" >
+                            <img src="/static/assets/images/logo.png" alt="Logo Orçamento.AL">
+                          </a>
+                        </div>
+                        <menu/>
+                      </div>
+                    </nav>
+                    </header>
+                {% endif %}
+        {% endblock %}
+
+        <!-- CONTENT -->
+        <article id="grp-content" class="{% block content-class %}{% endblock %}">
+            
+            <!-- MESSAGES -->
+            {% block messages %}
+                {% if messages %}
+                    <ul class="grp-messagelist">
+                        <!-- NOTE: no message|capfirst by purpose, because it does not work in some languages -->
+                        {% for message in messages %} 
+                            <li{% if message.tags %} class="grp-{{ message.tags }}"{% endif %}>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endblock %}
+
+            <div class="container">
+            <!-- BREADCRUMBS -->
+            {% block breadcrumbs %}
+            {% endblock %}
+            </div>
+
+            <!-- CONTENT TITLE -->
+            <header id="grp-content-title">
+                <div class="container">
+                {% block pretitle %}{% endblock %}
+                {% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %}
+                {% block object-tools %}{% endblock %}
+                </div>
+            </header>
+
+            <!-- CONTENT-CONTAINER -->
+            <div id="grp-content-container">
+                <div class="container">
+                {% block content %}
+                    {{ content }}
+                    {% block filters %}{% endblock %}
+                {% endblock %}
+                </div>
+            </div>
+
+        </article>
+        
+        <!-- FOOTER -->
+        {% block footer %}{% endblock %}
+
+    </div>
+    {% if LANGUAGE_CODE %}
+    {% with 'grappelli/jquery/i18n/ui.datepicker-'|add:LANGUAGE_CODE|add:'.js' as datepicker_url %}
+    <script src="{% static datepicker_url %}" type="text/javascript"></script>
+    {% endwith %}
+    {% endif %}
+</body>
+</html>

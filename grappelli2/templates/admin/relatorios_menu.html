@@ -1,0 +1,6 @@
+{% for relatorio in relatorios %}
+
+	<div class="grp-row" id="model-{{ model.object_name|lower }}">
+        {{ relatorio|safe }}
+    </div>
+{% endfor %}

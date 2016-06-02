@@ -1,0 +1,369 @@
+/*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
+
+.navbar-default,
+.navbar-gov,
+.navbar-menu {
+    background-color: #f8f8f8;
+    border-color: #e7e7e7
+}
+
+.navbar-default .navbar-brand,
+.navbar-gov .navbar-brand,
+.navbar-menu .navbar-brand {
+    color: #777
+}
+
+.navbar-default .navbar-brand:hover,
+.navbar-gov .navbar-brand:hover,
+.navbar-menu .navbar-brand:hover,
+.navbar-default .navbar-brand:focus,
+.navbar-gov .navbar-brand:focus,
+.navbar-menu .navbar-brand:focus {
+    color: #5e5e5e;
+    background-color: transparent
+}
+
+.navbar-default .navbar-text,
+.navbar-gov .navbar-text,
+.navbar-menu .navbar-text {
+    color: #777
+}
+
+.navbar-default .navbar-nav>li>a,
+.navbar-gov .navbar-nav>li>a,
+.navbar-menu .navbar-nav>li>a {
+    color: #777
+}
+
+.navbar-default .navbar-nav>li>a:hover,
+.navbar-gov .navbar-nav>li>a:hover,
+.navbar-menu .navbar-nav>li>a:hover,
+.navbar-default .navbar-nav>li>a:focus,
+.navbar-gov .navbar-nav>li>a:focus,
+.navbar-menu .navbar-nav>li>a:focus {
+    color: #333;
+    background-color: transparent
+}
+
+.navbar-default .navbar-nav>.active>a,
+.navbar-gov .navbar-nav>.active>a,
+.navbar-menu .navbar-nav>.active>a,
+.navbar-default .navbar-nav>.active>a:hover,
+.navbar-gov .navbar-nav>.active>a:hover,
+.navbar-menu .navbar-nav>.active>a:hover,
+.navbar-default .navbar-nav>.active>a:focus,
+.navbar-gov .navbar-nav>.active>a:focus,
+.navbar-menu .navbar-nav>.active>a:focus {
+    color: #555;
+    background-color: #e7e7e7
+}
+
+.navbar-default .navbar-nav>.disabled>a,
+.navbar-gov .navbar-nav>.disabled>a,
+.navbar-menu .navbar-nav>.disabled>a,
+.navbar-default .navbar-nav>.disabled>a:hover,
+.navbar-gov .navbar-nav>.disabled>a:hover,
+.navbar-menu .navbar-nav>.disabled>a:hover,
+.navbar-default .navbar-nav>.disabled>a:focus,
+.navbar-gov .navbar-nav>.disabled>a:focus,
+.navbar-menu .navbar-nav>.disabled>a:focus {
+    color: #ccc;
+    background-color: transparent
+}
+
+.navbar-default .navbar-toggle,
+.navbar-gov .navbar-toggle,
+.navbar-menu .navbar-toggle {
+    border-color: #ddd
+}
+
+.navbar-default .navbar-toggle:hover,
+.navbar-gov .navbar-toggle:hover,
+.navbar-menu .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus,
+.navbar-gov .navbar-toggle:focus,
+.navbar-menu .navbar-toggle:focus {
+    background-color: #ddd
+}
+
+.navbar-default .navbar-toggle .icon-bar,
+.navbar-gov .navbar-toggle .icon-bar,
+.navbar-menu .navbar-toggle .icon-bar {
+    background-color: #888
+}
+
+.navbar-default .navbar-collapse,
+.navbar-gov .navbar-collapse,
+.navbar-menu .navbar-collapse,
+.navbar-default .navbar-form,
+.navbar-gov .navbar-form,
+.navbar-menu .navbar-form {
+    border-color: #e7e7e7
+}
+
+.navbar-default .navbar-nav>.open>a,
+.navbar-gov .navbar-nav>.open>a,
+.navbar-menu .navbar-nav>.open>a,
+.navbar-default .navbar-nav>.open>a:hover,
+.navbar-gov .navbar-nav>.open>a:hover,
+.navbar-menu .navbar-nav>.open>a:hover,
+.navbar-default .navbar-nav>.open>a:focus,
+.navbar-gov .navbar-nav>.open>a:focus,
+.navbar-menu .navbar-nav>.open>a:focus {
+    background-color: #e7e7e7;
+    color: #555
+}
+
+@media (max-width: 767px) {
+    .navbar-default .navbar-nav .open .dropdown-menu>li>a,
+    .navbar-gov .navbar-nav .open .dropdown-menu>li>a,
+    .navbar-menu .navbar-nav .open .dropdown-menu>li>a {
+        color: #777
+    }
+    .navbar-default .navbar-nav .open .dropdown-menu>li>a:hover,
+    .navbar-gov .navbar-nav .open .dropdown-menu>li>a:hover,
+    .navbar-menu .navbar-nav .open .dropdown-menu>li>a:hover,
+    .navbar-default .navbar-nav .open .dropdown-menu>li>a:focus,
+    .navbar-gov .navbar-nav .open .dropdown-menu>li>a:focus,
+    .navbar-menu .navbar-nav .open .dropdown-menu>li>a:focus {
+        color: #333;
+        background-color: transparent
+    }
+    .navbar-default .navbar-nav .open .dropdown-menu>.active>a,
+    .navbar-gov .navbar-nav .open .dropdown-menu>.active>a,
+    .navbar-menu .navbar-nav .open .dropdown-menu>.active>a,
+    .navbar-default .navbar-nav .open .dropdown-menu>.active>a:hover,
+    .navbar-gov .navbar-nav .open .dropdown-menu>.active>a:hover,
+    .navbar-menu .navbar-nav .open .dropdown-menu>.active>a:hover,
+    .navbar-default .navbar-nav .open .dropdown-menu>.active>a:focus,
+    .navbar-gov .navbar-nav .open .dropdown-menu>.active>a:focus,
+    .navbar-menu .navbar-nav .open .dropdown-menu>.active>a:focus {
+        color: #555;
+        background-color: #e7e7e7
+    }
+    .navbar-default .navbar-nav .open .dropdown-menu>.disabled>a,
+    .navbar-gov .navbar-nav .open .dropdown-menu>.disabled>a,
+    .navbar-menu .navbar-nav .open .dropdown-menu>.disabled>a,
+    .navbar-default .navbar-nav .open .dropdown-menu>.disabled>a:hover,
+    .navbar-gov .navbar-nav .open .dropdown-menu>.disabled>a:hover,
+    .navbar-menu .navbar-nav .open .dropdown-menu>.disabled>a:hover,
+    .navbar-default .navbar-nav .open .dropdown-menu>.disabled>a:focus,
+    .navbar-gov .navbar-nav .open .dropdown-menu>.disabled>a:focus,
+    .navbar-menu .navbar-nav .open .dropdown-menu>.disabled>a:focus {
+        color: #ccc;
+        background-color: transparent
+    }
+}
+
+.navbar-default .navbar-link,
+.navbar-gov .navbar-link,
+.navbar-menu .navbar-link {
+    color: #777
+}
+
+.navbar-default .navbar-link:hover,
+.navbar-gov .navbar-link:hover,
+.navbar-menu .navbar-link:hover {
+    color: #333
+}
+
+.navbar-default .btn-link,
+.navbar-gov .btn-link,
+.navbar-menu .btn-link {
+    color: #777
+}
+
+.navbar-default .btn-link:hover,
+.navbar-gov .btn-link:hover,
+.navbar-menu .btn-link:hover,
+.navbar-default .btn-link:focus,
+.navbar-gov .btn-link:focus,
+.navbar-menu .btn-link:focus {
+    color: #333
+}
+
+.navbar-default .btn-link[disabled]:hover,
+.navbar-gov .btn-link[disabled]:hover,
+.navbar-menu .btn-link[disabled]:hover,
+.navbar-default .btn-link[disabled]:focus,
+.navbar-gov .btn-link[disabled]:focus,
+.navbar-menu .btn-link[disabled]:focus,
+fieldset[disabled] .navbar-default .btn-link:hover,
+fieldset[disabled] .navbar-gov .btn-link:hover,
+fieldset[disabled] .navbar-menu .btn-link:hover,
+fieldset[disabled] .navbar-default .btn-link:focus,
+fieldset[disabled] .navbar-gov .btn-link:focus,
+fieldset[disabled] .navbar-menu .btn-link:focus {
+    color: #ccc
+}
+
+.navbar-gov,
+.navbar-menu {
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    border: none;
+    margin-bottom: 0
+}
+
+.navbar-menu .navbar-brand {
+    height: auto;
+    padding-top: 5px;
+    padding-bottom: 5px
+}
+
+.navbar-gov {
+    background-color: #014470;
+    color: #fff
+}
+
+.navbar-gov .navbar-nav>li>a {
+    color: #fff
+}
+
+.navbar-gov .navbar-nav>li>a:hover,
+.navbar-gov .navbar-nav>li>a:focus {
+    color: #fff;
+    background-color: #0163a3
+}
+
+.navbar-gov .navbar-nav>.open>a,
+.navbar-gov .navbar-nav>.open>a:hover,
+.navbar-gov .navbar-nav>.open>a:focus {
+    background-color: #0163a3;
+    color: #fff
+}
+
+.navbar-gov .navbar-nav .dropdown-toggle {
+    text-transform: uppercase;
+    font-weight: 500
+}
+
+.navbar-gov .navbar-nav .navbar-toggle:focus {
+    background-color: transparent
+}
+
+.navbar-gov .navbar-nav img {
+    margin-right: 5px
+}
+
+.navbar-gov .btn-group {
+    padding: 12px 6px 12px 0;
+    line-height: 22px
+}
+
+.navbar-gov .btn-group button:last-child {
+    margin-right: 3px
+}
+
+.navbar-gov .navbar-sec {
+    margin-right: 15px
+}
+
+.navbar-gov .navbar-accessibility {
+    min-width: 215px
+}
+
+.navbar-gov .navbar-accessibility>li>a:hover,
+.navbar-gov .navbar-accessibility>li>a:focus {
+    background-color: transparent;
+    color: #59bcfe
+}
+
+.navbar-menu {
+    background-color: #0163a3;
+    padding-top: 5px;
+    padding-bottom: 5px
+}
+
+.navbar-menu .navbar-nav {
+    margin-top: 20px
+}
+
+.navbar-menu .navbar-nav>li>a {
+    color: #fff;
+    text-transform: uppercase;
+    padding: 5px 8px
+}
+
+.navbar-menu .navbar-nav>li>a:hover,
+.navbar-menu .navbar-nav>li>a:focus {
+    color: #ccc;
+    background-color: transparent
+}
+
+.navbar-menu .navbar-nav>.active>a {
+    color: #59bcfe;
+    background-color: transparent
+}
+
+.navbar-menu .navbar-nav>.active>a,
+.navbar-menu .navbar-nav>.active>a:hover,
+.navbar-menu .navbar-nav>.active>a:focus {
+    color: #fff;
+    background-color: #f31f1f
+}
+
+.navbar-menu .navbar-toggle {
+    border: none;
+    background: transparent !important
+}
+
+.navbar-menu .navbar-toggle:hover {
+    background: transparent !important
+}
+
+.navbar-menu .navbar-toggle .icon-bar {
+    background: #fff;
+    width: 22px;
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
+    -webkit-transition: all 0.3s ease-out 0.3s;
+    -o-transition: all 0.3s ease-out 0.3s;
+    transition: all 0.3s ease-out 0.3s
+}
+
+.navbar-menu .navbar-toggle .top-bar {
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    -webkit-transform-origin: 10% 10%;
+    -moz-transform-origin: 10% 10%;
+    -ms-transform-origin: 10% 10%;
+    transform-origin: 10% 10%
+}
+
+.navbar-menu .navbar-toggle .middle-bar {
+    opacity: 0;
+    filter: alpha(opacity=0)
+}
+
+.navbar-menu .navbar-toggle .bottom-bar {
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    -webkit-transform-origin: 10% 90%;
+    -moz-transform-origin: 10% 90%;
+    -ms-transform-origin: 10% 90%;
+    transform-origin: 10% 90%
+}
+
+.navbar-menu .navbar-toggle.collapsed .top-bar {
+    -moz-transform: rotate(0);
+    -ms-transform: rotate(0);
+    -webkit-transform: rotate(0);
+    transform: rotate(0)
+}
+
+.navbar-menu .navbar-toggle.collapsed .middle-bar {
+    opacity: 1;
+    filter: alpha(opacity=100)
+}
+
+.navbar-menu .navbar-toggle.collapsed .bottom-bar {
+    -moz-transform: rotate(0);
+    -ms-transform: rotate(0);
+    -webkit-transform: rotate(0);
+    transform: rotate(0)
+}

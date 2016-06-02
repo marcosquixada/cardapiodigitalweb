@@ -1,0 +1,11 @@
+.acf-map {
+  width: 100%;
+  height: 300px;
+  border:4px solid #fff;
+  margin-bottom: 20px;
+}
+
+/* fixes potential theme css conflict */
+.acf-map img {
+  max-width: inherit !important;
+}

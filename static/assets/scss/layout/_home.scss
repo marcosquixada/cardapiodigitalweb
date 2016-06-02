@@ -1,0 +1,68 @@
+// Home
+.main-home {
+  section {
+    .header-content .title {
+      text-align: center;
+      color: $blue-light;
+    }
+    .body-content {
+      @extend %row;
+      padding-top: 15px;
+      padding-bottom: 15px;
+    }
+  }
+  .section-publicacoes {
+    background-color: $gray-lighter;
+    .box {
+      @extend %col-sm-4;
+    }
+    .box-item {
+      padding: 30px 10px;
+      text-align: center;
+      background-color: $brand-primary;
+      color: #fff;
+      min-height: 225px;
+      .title {
+        font-size: $font-size-h5;
+      }
+      a {
+        text-decoration: underline;
+        @include transition(all 0.3s ease);
+      }
+      a:hover {
+        color: #fff;
+        text-decoration: none;
+      }
+    }
+    .box-item .icon {
+      @extend .fa-5x;
+      color: $blue-light;
+    }
+  }
+  .section-execucoes {
+    .box {
+      @extend %col-sm-6;
+    }
+    .box-value {
+      @extend %col-sm-4;
+      .box-item {
+        padding: 60px 10px;
+        text-align: center;
+        background-color: $brand-success;
+        color: #fff;
+        min-height: 225px;
+        .title {
+          font-size: $font-size-h4;
+        }
+        .currency {
+          font-size: 80%;
+        }
+      }
+    }
+  }
+}
+
+.panel-chart {
+  @extend .panel;
+  @extend .panel-default;
+}

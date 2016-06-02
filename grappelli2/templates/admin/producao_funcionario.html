@@ -1,0 +1,11 @@
+<tr class="page-break"> 
+  	<td>{{ funcionario.nome | upper }}</td>
+	<td>{{ qtd_presencas_p }}</td>
+	<td>{{ qtd_presencas_mp }}</td>
+	<td>{{ qtd_presencas_f}}</td>
+	<td>{{ vlr_efetivo }}</td>
+	<td>{{ desconto }}</td>
+	<td>{{ vlr_rateio }}</td>
+	<td>{% if rateio_manual %}*{% endif%}{{ rateio_a_receber }}</td>
+	<td>{{ producao_final|safe }}</td>
+</tr> 

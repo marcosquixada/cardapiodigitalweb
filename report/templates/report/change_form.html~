@@ -1,0 +1,215 @@
+{% extends "admin/base_site.html" %}
+
+<!-- LOADING -->
+{% load url from future %}
+{% load i18n admin_modify adminmedia grp_tags %}
+
+<!-- STYLESHEETS -->
+{% block stylesheets %}
+    {{ block.super }}
+{% endblock %}
+
+<!-- JAVASCRIPTS -->
+{% block javascripts %}
+    {{ block.super }}
+    {% url 'admin:jsi18n' as jsi18nurl %}
+    <script type="text/javascript" src="{{ jsi18nurl|default:'../../../jsi18n/' }}"></script>
+    <script src="{% admin_media_prefix %}js/grappelli/jquery.grp_inline.js" type="text/javascript"></script>
+    <script type="text/javascript" charset="utf-8">
+        (function($) {
+            $(document).ready(function() {
+            	$('.user-options').hide('fast');
+	  	      	$('#login').click(function() {
+	          	    $('.user-options').toggle(400);
+	          	    return false;
+	          	  });
+                grappelli.initDateAndTimePicker();
+                $( "#tabs" ).tabs();
+                $("div.container-flexible div.group").grp_collapsible_group();
+                $("div#content .collapse ").grp_collapsible({
+                    on_init: function(elem, options) {
+                        // open collapse (and all collapse parents) in case of errors
+                        if (elem.find("ul.errorlist").length > 0) {
+                            elem.removeClass("closed")
+                                .addClass("open");
+                            elem.parents(".collapse")
+                                .removeClass("closed")
+                                .addClass("open");
+                        }
+			
+			tipo = $('input:radio[name=tipo]:checked').val();
+			
+			if(tipo=='1'){
+			   $('#rowcells-1pessoa').show('fast');
+		           $('#rowcells-1empresa').hide();
+			   $('#rowcells-1errorsempresa').hide();	
+			}else if (tipo == '2'){
+			   $('#rowcells-1empresa').show('fast');
+		           $('#rowcells-1pessoa').hide();
+			   $('#rowcells-1errorspessoa').hide();
+			}
+			        }
+                });
+                var related_lookup_fields_fk = {% get_related_lookup_fields_fk adminform.model_admin %};
+                var related_lookup_fields_m2m = {% get_related_lookup_fields_m2m adminform.model_admin %};
+                var related_lookup_fields_generic = {% get_related_lookup_fields_generic adminform.model_admin %};
+                var autocomplete_fields_fk = {% get_autocomplete_lookup_fields_fk adminform.model_admin %};
+                var autocomplete_fields_m2m = {% get_autocomplete_lookup_fields_m2m adminform.model_admin %};
+                var autocomplete_fields_generic = {% get_autocomplete_lookup_fields_generic adminform.model_admin %};
+                
+            $('#id_tipo_0').click(function() {
+		    $('#rowcells-1pessoa').show('fast');
+		    $('#rowcells-1empresa').hide();
+		});
+
+		$('#id_tipo_1').click( function() {
+		    $('#rowcells-1empresa').show('fast');
+		    $('#rowcells-1pessoa').hide();
+		});
+
+		
+                $.each(related_lookup_fields_fk, function() {
+                    $("#id_" + this).grp_related_fk({lookup_url:"{% url 'grp_related_lookup' %}"});
+                });
+                $.each(related_lookup_fields_m2m, function() {
+                    $("#id_" + this).grp_related_m2m({lookup_url:"{% url 'grp_m2m_lookup' %}"});
+                });
+                $.each(related_lookup_fields_generic, function() {
+                    var content_type = "#id_" + this[0],
+                        object_id = "#id_" + this[1];
+                    $(object_id).grp_related_generic({content_type:content_type, object_id:object_id, lookup_url:"{% url 'grp_related_lookup' %}"});
+                });
+                $.each(autocomplete_fields_fk, function() {
+                    $("#id_" + this).grp_autocomplete_fk({
+                        lookup_url:"{% url 'grp_related_lookup' %}",
+                        autocomplete_lookup_url:"{% url 'grp_autocomplete_lookup' %}"
+                    });
+                });
+                $.each(autocomplete_fields_m2m, function() {
+                    $("#id_" + this).grp_autocomplete_m2m({
+                        lookup_url:"{% url 'grp_m2m_lookup' %}",
+                        autocomplete_lookup_url:"{% url 'grp_autocomplete_lookup' %}"
+                    });
+                });
+                $.each(autocomplete_fields_generic, function() {
+                    var content_type = "#id_" + this[0],
+                        object_id = "#id_" + this[1];
+                    $(object_id).grp_autocomplete_generic({
+                        content_type:content_type,
+                        object_id:object_id,
+                        lookup_url:"{% url 'grp_related_lookup' %}",
+                        autocomplete_lookup_url:"{% url 'grp_autocomplete_lookup' %}"
+                    });
+                });
+            });
+        })(django.jQuery);
+    </script>
+    {{ media }}
+{% endblock %}
+
+<!-- COLTYPE/BODYCLASS -->
+{% block bodyclass %}{{ opts.app_label }}-{{ opts.object_name.lower }} change-form{% endblock %}
+{% block content-class %}content-flexible{% endblock %}
+
+<!-- BREADCRUMBS -->
+{% block breadcrumbs %}
+    {% if not is_popup %}
+        <div id="breadcrumbs">
+        <section id="top_bar">						
+					<section id="main_menu">
+						<ul class="sf-menu">
+							<li><a href="../../../">{% trans "Home" %}</a></li>
+             				<li><a href="../../">{%ifequal app_label|capfirst|escape 'Rh'%}Cadastro Geral{%else%}{% trans app_label|capfirst|escape %}{%endifequal%}</a></li>
+             {% if has_change_permission %}<li><a href="../">{{ opts.verbose_name_plural|capfirst }}</a></li>{% else %}<li><a href="#">{{ opts.verbose_name_plural|capfirst }}</a></li>{% endif %} 
+             {% if add %}<li><a href="#">{% trans "Add" %}{{ opts.verbose_name }}</a></li>{% else %}<li><a href="#">{{ original|truncatewords:"18" }}</a></li>{% endif %}
+        				</ul>
+        			</section>
+        </section>
+        </div>
+    {% endif %}
+{% endblock %}
+
+
+<!-- CONTENT -->
+{% block content %}
+    <div class="container-flexible">
+        <div class="form-container">
+            <form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.module_name }}_form">{% csrf_token %}{% block form_top %}{% endblock %} 
+                <div>
+                    <!-- Popup Hidden Field -->
+                    {% if is_popup %}<input type="hidden" name="_popup" value="1" />{% endif %}
+                    
+                    <!-- Submit-Row -->
+                    {% if save_on_top %}{% submit_row %}{% endif %}
+                    
+                    <!-- Errors -->
+                    {% if errors %}
+                        <p class="errornote">{% blocktrans count errors|length as counter %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktrans %}</p>
+                        <ul class="errorlist">{% for error in adminform.form.non_field_errors %}<li>{{ error }}</li>{% endfor %}</ul>
+                    {% endif %}
+                    <div id="tabs">
+			<ul>
+		    {% for fieldset in adminform %}
+                       <li><a href="#tabs-{{ forloop.counter }}">{% if fieldset.name %}{{ fieldset.name }}{%else%}Informações do Cadastro{%endif%}</a></li>
+                    {% endfor %}
+		    {% for inline_admin_formset in inline_admin_formsets %}
+                        <li><a href="#tabs-{{ forloop.counter }}{{inline_admin_formsets|length}}">{% if inline_admin_formset.opts.title %}{{ inline_admin_formset.opts.title }}{% else %}{{ inline_admin_formset.opts.verbose_name_plural|capfirst }}{% endif %}</a></li>
+                    {% endfor %}
+			
+			{% block grid %}
+
+			{% endblock %}
+			</ul>
+                    <!-- Fieldsets -->
+                    {% for fieldset in adminform %}
+                        {% include "admin/includes/fieldset.html" %}
+                    {% endfor %}
+                    
+                    {% block after_field_sets %}{% endblock %}
+                    
+                    <!-- Inlines -->
+                    {% for inline_admin_formset in inline_admin_formsets %}
+                        {% include inline_admin_formset.opts.template %}
+                    {% endfor %}
+                    </div>
+                    {% block after_related_objects %}{% endblock %}
+                    
+                    <!-- Submit-Row -->
+                    {% if not save_on_top %}
+						<div class="submit-row" >
+						<input type="submit" value="{% trans 'Salvar e continuar' %}" name="_continue" />
+						</div>
+					{% else %}{% submit_row %}{% endif %}
+                    
+                    {% if adminform and add %}
+                        {% block extrahead %}
+                            <script type="text/javascript">
+                                (function($){
+                                    $(function(){
+                                        try {
+                                            // focus on first form-field
+                                            $("#{{ adminform.first_field.auto_id }}, #{{ adminform.first_field.auto_id }}_0")
+                                            .eq(0).focus();
+                                        } catch(e) {}
+                                    });
+                                }(django.jQuery));
+                            </script>
+                        {% endblock %}
+                    {% endif %}
+                    
+
+					{% if adminform and add %}
+					   <script type="text/javascript">document.getElementById("{{ adminform.first_field.id_for_label }}").focus();</script>
+					{% endif %}
+                    <!-- JS for prepopulated fields -->
+                    {% prepopulated_fields_js %}
+                    
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+

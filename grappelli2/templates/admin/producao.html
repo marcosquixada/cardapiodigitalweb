@@ -1,0 +1,210 @@
+{% extends "admin/base_site.html" %}
+{% load admin_static %}
+<!-- LOADING -->
+{% load i18n grp_tags leal_tags log %}
+
+{% block stylesheets %}
+        <!-- Bootstrap core CSS -->
+    <link href="{% static "admin/css/bootstrap.min.css" %}" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="{% static "admin/css/ie10-viewport-bug-workaround.css" %}" rel="stylesheet">
+
+    <link href="{% static "grappelli/stylesheets/screen.css" %}" rel="stylesheet" type="text/css" media="screen">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static "admin/css/estilos.css" %}"  rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="{% static "assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="{% static "js/ie-emulation-modes-warning.js" %}" ></script>
+
+{{ block.super }}
+{% endblock %}
+
+<!-- JAVASCRIPTS -->
+{% block javascripts %}
+<!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="{% static "assets/js/vendor/jquery.min.js" %}"><\/script>')</script>
+    <script src="{% static "dist/js/bootstrap.min.js" %}></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="{% static "assets/js/ie10-viewport-bug-workaround.js"%}""></script>
+    {{ block.super }}
+{% endblock %}
+
+<!-- COLTYPE/BODYCLASS-- >
+{% block bodyclass %}dashboard{% endblock %}
+{% block content-class %}content-grid{% endblock %}
+
+{% block navbar %}
+<ul class="nav navbar-nav navbar-inverse">
+{% for app in app_list %}
+
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+    {% ifequal app.name 'Auth'%}
+        Autenticação 
+    {% else %}
+        {% ifequal app.name 'Rh'%}
+            Recursos Humanos
+        {% else %}
+            {% trans app.name %}
+        {% endifequal %}
+    {% endifequal %}<b class="caret"></b>
+</a>
+
+<ul class="dropdown-menu">
+    {% for model in app.models %}
+    <li><a href="{{ model.admin_url }}">{{ model.name }}</a></li>
+    {% endfor %}
+</ul>
+</li>
+{% endfor %} 
+</ul>
+{% endblock %}
+<!-- BREADCRUMBS -->
+{% block breadcrumbs %}
+    <ul class="grp-horizontal-list">
+        <li><a href="/lealmoreira/admin/servico/servico/?periodo__id={{servico.periodo.id}}">Serviços</a></li>
+        <li>Relatório de Produção</li>
+    </ul>
+{% endblock %}
+{% block content_title %}
+    {% if title %}
+        <header><h1>BEM VINDO</h1></header>
+    {% endif %}
+{% endblock %}
+
+<!-- CONTENT -->
+{% block content %}
+
+    <div class="container-fluid principal">
+      
+      <div class="table-responsive"> 
+        <table class="table table-bordered"> 
+          <thead> 
+            <tr> 
+              <!-- <th>#</th>  -->
+              <th>FORMULÁRIO</th> 
+              <th>LOCAL</th> 
+              <th>PERIODO</th> 
+              <th>DOCUMENTO</th> 
+             <!--  <th>Table heading</th> 
+              <th>Table heading</th>  -->
+            </tr> 
+          </thead> 
+          <tbody> 
+            <tr> 
+              <!-- <th scope="row">1</th>  -->
+              <td>CONTROLE DE PRODUÇÃO</td> 
+              <td>{{ servico.obra }}</td> 
+              <td>{{ servico.periodo | upper }}</td> 
+              <td>{{ servico.codigo }}</td> 
+             <!--  <td>Table cell</td> 
+              <td>Table cell</td>  -->
+            </tr> 
+          </tbody> 
+        </table> 
+      </div>
+
+      <div class="table-responsive"> 
+        <table class="table table-bordered table-striped table-hover"> 
+          <caption>Descrição dos Serviços</caption>
+          <thead> 
+            <tr> 
+              <!-- <th>#</th>  -->
+              <th>FUNÇÃO</th> 
+              <th>QUANTIDADE</th> 
+              <th>QTD. DIAS PREVISTOS</th> 
+              <th>QTD. DIAS EXECUTADOS</th> 
+              <th>PRODUÇÃO POR FUNCIONÁRIO</th> 
+              <th>PRODUÇÃO POR DIA</th> 
+              <th>PRODUÇÃO TOTAL</th> 
+            </tr> 
+          </thead> 
+          <tbody> 
+          {% for cargo in cargos %}
+            {% funcionarios_cargo request servico cargo %}
+          {% endfor %}
+            <tr>
+              <td colspan="6">&nbsp;</td>
+              <td>
+                <table class="table table-bordered">
+                  <tr>
+                    <td class="warning">TOTAL SERVIÇO</td> 
+                    <td><span class="badge">{{valor_total}}</span> </td>    
+                  </tr>
+                </table>
+                
+              </td>
+            </tr>
+          </tbody> 
+        </table> 
+      </div>
+
+      <div class="table-responsive"> 
+        <table class="table table-bordered table-striped table-hover"> 
+          <caption>Acompanhamento Diário de Mão de Obra</caption>
+          <thead> 
+            <tr> 
+              <!-- <th>#</th>  -->
+              <th>FUNCIONÁRIO</th>
+              <th>FUNÇÃO</th> 
+              <th>PERÍODO</th> 
+            </tr> 
+          </thead> 
+          <tbody> 
+          {% for funcionario in servico.funcionarios.all %}
+            {% funcionarios request servico funcionario %}
+          {% endfor %}  
+          <tr>
+            <td colspan="3" align="right">* Faltas não justificadas</td>
+          </tr>         
+          </tbody> 
+        </table> 
+      </div>
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover">
+          <caption>Cálculo de Produção</caption>
+          <thead>
+            <th>FUNCIONÁRIO</th>
+            <th>P</th>
+            <th>MP</th>
+            <th>F</th>
+            <th>R$ Efetivo</th>
+            <th>Desc Faltas</th>
+            <th>Valor para Rateio</th>
+            <th>Rateio</th>
+            <th>R$ Produção Final</th>
+          </thead>
+          <tbody>
+        {% for funcionario in servico.funcionarios.all %}
+         {% calculo_producao request servico funcionario %}
+        {% endfor %}
+        <tr>
+            <td colspan="9" align="right">* Rateio manual</td>
+          </tr>
+        </tbody>
+        </table>
+      </div>
+      <div class="table-responsive">
+        <table class="table-bordered table">
+          <thead>
+            <tr>
+              <th>PRODUÇÃO TOTAL DO SERVIÇO</th>
+              <th>PRODUÇÃO TOTAL PAGA</th>
+            </tr>
+          </thead>
+          <tr>
+            <td>{{ valor_total }}</td>
+            <td>{{ valor_pago }}</td>
+          </tr>
+        </table>
+      </div>
+      <div style="float:right; padding-top: 10px"><a href="/lealmoreira/admin/servico/servico/?periodo__id={{servico.periodo.id}}" class="btn btn-primary">Voltar</a></div>
+    </div><!-- /.container -->
+
+{% endblock %}

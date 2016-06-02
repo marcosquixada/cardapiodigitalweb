@@ -1,0 +1,26 @@
+<tr> 
+  <td class="">{{ funcionario.nome|upper }}</td> 
+  <td>{{ funcionario.cargo|upper }}</td> 
+  <td>
+    <table class="table table-bordered table-condensed">
+      <thead>
+        <tr>
+          {% for data in datas %}
+            {% if data.trabalhado %}
+              <th style="background:#CB1B3A; color: white; font-weight:bold">{{ data.data }}</th>
+            {% else %}
+              <th>{{ data.data }}</th>
+            {% endif %}
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          {% for presenca in presencas %}
+              {{ presenca|safe }}
+          {% endfor %}
+        </tr>
+      </tbody>
+    </table>
+  </td>
+</tr>

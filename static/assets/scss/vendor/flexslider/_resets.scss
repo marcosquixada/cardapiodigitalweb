@@ -1,0 +1,28 @@
+
+//  * RESETS
+
+.flex-container a:hover, .flex-slider a:hover {
+  outline: none;
+}
+
+.slides {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  > li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+}
+
+.flex-control-nav, .flex-direction-nav {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.flex-pauseplay span {
+  text-transform: capitalize;
+}

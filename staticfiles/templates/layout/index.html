@@ -1,0 +1,173 @@
+<div ng-include="'/static/templates/layout/slider.html'"></div>
+<main id="main" class="main main-home">
+  <!-- section-publicacoes -->
+  <section class="section-publicacoes">
+    <div class="container">
+      <header class="header-content" ng-controller="IndexController">
+        <h1 class="title" ng-model="secao">Publicações</h1>
+      </header>
+      <div class="body-content">
+        <div class="box box-chart col-sm-4">
+          <div class="box-item">
+            <span class="icon icon-search-chart"></span>
+            <h2 class="title">Lei Orçamentária Anual (LOA)</h2>
+            <a href="/publicacao/loa">Ver mais</a>
+          </div>
+        </div>
+        <div class="box box-chart col-sm-4">
+          <div class="box-item">
+            <span class="icon icon-circle-chart"></span>
+            <h2 class="title">Lei de Diretrizes Orçamentárias (LDO)</h2>
+            <a href="/publicacao/ldo">Ver mais</a>
+          </div>
+        </div>
+        <div class="box box-chart col-sm-4">
+          <div class="box-item">
+            <span class="icon icon-line-chart"></span>
+            <h2 class="title">Créditos</h2>
+            <a href="#">Ver mais</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+  </section>
+  <!-- /section-publicacoes -->
+  <!-- section-execucoes -->
+  <section class="section-execucoes">
+    <div class="container">
+      <header class="header-content">
+        <h1 class="title">Execução Orçamentária</h1>
+      </header>
+      <div class="body-content">
+        <div class="box-value col-sm-4">
+          <div class="box-item">
+            <h2 class="title">Orçamento Inicial</h2>
+            <p class="lead"><span class="currency">R$</span> {{vl_inicial_geral | currency: " " : 3}}</p>
+          </div>
+        </div>
+        <div class="box-value">
+            <div class="box-item col-sm-4">
+              <h2 class="title">Orçamento Atualizado</h2>
+              <p class="lead"><span class="currency">R$</span> {{vl_atualizado_geral | currency: " " : 3}}</p>
+          </div>
+        </div>
+        <div class="box-value col-sm-4">
+          <div class="box-item">
+          <h2 class="title">Orçamento Empenhado</h2>
+            <p class="lead"><span class="currency">R$</span> {{vl_empenhado_geral | currency: " " : 3}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="body-content">
+        <div class="box box-chart col-sm-6">
+          <div class="panel-chart">
+            <header class="panel-heading panel-control">
+              <h3 class="panel-title"><span class="panel-icon icon icon-columns-chart"></span> Execuções do Governo</h3>
+              <div class="panel-right">
+                <div class="dropdown">
+                <a class="btn" data-target="#" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-ellipsis-v"></i>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dLabel">
+                    <li>
+                      <select ui-select2 ng-model="selectedDate" data-placeholder="Selecione um Período" ng-change="updateDate()">
+                        <option value=""></option>
+                        <option ng-repeat="ano in anos" value="{{ano}}"> {{ano}}</option>
+                      </select>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </header>
+            <div class="panel-body">
+              <!-- <canvas id="line" class="chart chart-line" chart-data="chart_1.data" chart-labels="chart_1.labels" chart-options="options" chart-legend="true" chart-series="chart_1.series"> </canvas> -->
+              <highchart id="chart1" config="chart_1"></highchart>
+            </div>
+          </div>
+        </div>
+        <div class="box box-chart col-sm-6">
+          <div class="panel-chart">
+            <header class="panel-heading panel-control">
+              <h3 class="panel-title"><span class="panel-icon icon icon-columns-chart"></span> Execuções por Órgãos</h3>
+              <div class="panel-right">
+                <div class="dropdown">
+                  <a class="btn" data-target="#" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-ellipsis-v"></i>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dLabel">
+                    <li>
+                      <select ui-select2 ng-model="selectedItem" data-placeholder="Selecione um Orgão" ng-change="update()">
+                        <option value=""></option>
+                        <option ng-repeat="orgao in orgaos" value="{{orgao.id_orgao}}">{{orgao.ds_orgao | titlecase}}</option>
+                      </select>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </header>
+            <div class="panel-body">
+              <p><strong>{{orgaoSelected | titlecase}}</strong></p>
+              <!--<canvas id="bar" class="chart chart-bar" chart-data="chart_2.data" chart-options="options" chart-labels="chart_2.labels" chart-series="chart_2.series" chart-legend="true"></canvas>-->
+              <highchart id="chart2" config="chart_2"></highchart>
+            </div>
+          </div>
+        </div>
+
+        <div class="box box-chart col-sm-12">
+          <div class="panel-chart">
+            <header class="panel-heading panel-control">
+              <h3 class="panel-title"><span class="panel-icon icon icon-columns-chart"></span> Execução por Localização</h3>
+              <div class="panel-right">
+                <div class="dropdown">
+                  <a class="btn" data-target="#" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-ellipsis-v"></i>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dLabel">
+                    <li>
+                      <select ui-select2 ng-model="selectedLocation" data-placeholder="Selecione uma localização" ng-change="updateLocalizacao()">
+                        <option value=""></option>
+                        <option ng-repeat="localizacao in localizacoes" value="{{localizacao.id_localizacao}}">{{localizacao.ds_localizacao | titlecase}}</option>
+                      </select>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </header>
+            <div class="panel-body">
+              <p><strong>{{dsLocalizacaoSelected | titlecase}}</strong></p>
+             <!--  <canvas id="pie" class="chart chart-pie" chart-data="chart_4.data" chart-options="options" chart-labels="chart_4.labels"></canvas> -->
+              <highchart id="chart4" config="chart_4"></highchart>
+            </div>
+          </div>
+        </div>
+        <div class="box box-chart col-sm-12">
+          <div class="panel-chart">
+            <header class="panel-heading panel-control">
+              <h3 class="panel-title"><span class="panel-icon icon icon-columns-chart"></span> Excução por fonte de Recurso</h3>
+              <!-- <div class="panel-right">
+                <div class="dropdown">
+                  <a class="btn" data-target="#" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-ellipsis-v"></i>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dLabel">
+                    <li><a href="#">loremlorem</a></li>
+                    <li><a href="#">loremlorem</a></li>
+                    <li><a href="#">loremlorem</a></li>
+                  </ul>
+                </div>
+              </div> -->
+            </header>
+            <div class="panel-body">
+              <!-- <canvas id="pie" class="chart chart-pie" chart-data="chart_3.data" chart-options="options" chart-labels="chart_3.labels"></canvas> -->
+               <highchart id="chart3" config="chart_3"></highchart>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- /section-execucoes -->
+</main>

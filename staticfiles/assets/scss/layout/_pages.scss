@@ -1,0 +1,46 @@
+// Home
+.main-page {
+  padding-bottom: 30px;
+  a {
+    color: $brand-primary;
+    text-decoration: none;
+  }
+  a:hover {
+    color: $brand-info;
+  }
+  .content-header {
+    .title {
+      // color: $brand-primary;
+      border-bottom: 1px solid $gray-lighter;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+    }
+  }
+
+  .section-page {
+    .list-group-item.active a {
+      color: #fff;
+    }
+    .media-right {
+      min-width: 73px;
+      .nav > li > a {
+        padding: 3px 8px;
+      }
+    }
+    .content-body {
+      @extend %row;
+    }
+    .content-full {
+      @extend %col-sm-12;
+    }
+    .content-main {
+      @extend %col-sm-7;
+    }
+
+    .content-sidebar {
+      @extend %col-sm-4;
+      @extend %col-sm-offset-1;
+    }
+
+  }
+}

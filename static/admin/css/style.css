@@ -1,0 +1,70 @@
+
+#logogoverno {
+    background: url(../img/logo-governo.png) no-repeat;
+    width: 200px;
+    height: 37px;
+    margin-right: 30px;
+    margin-left: 20px;
+}
+
+.navbar-inverse .dropdown-menu {
+     background-image: linear-gradient(#2b317b, #262c76);
+     color:#ffffff;
+     margin-top: -1px !important;
+}
+
+.navbar-inverse{
+	background-image: linear-gradient(#2b317b, #262c76);
+}
+
+.navbar-inverse a{
+	color:#ffffff !important;
+}
+
+.navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:focus, .navbar-inverse .navbar-nav > .open > a:hover {
+	background: #2b317b;
+}
+
+.navbar-inverse .dropdown-menu a:hover {
+     background: #2b317b;
+}
+
+header#grp-header #grp-navigation ul#grp-user-tools > li {
+	border-left: none;
+}
+
+header#grp-header #grp-user-tools {
+    height: 40px;
+    border-left: 2px solid #262c76 !important;
+    padding: 5px;
+}
+header#grp-header #grp-navigation ul#grp-user-tools > li:last-child {
+	height: 40px;
+    padding-top: 3px;
+}
+
+header#grp-header #grp-navigation a {
+	color: #fff !important;
+}
+
+header#grp-header #grp-navigation ul li.grp-collapse.grp-open > ul {
+    background-image: linear-gradient(#2b317b, #262c76) !important;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-top: 1px solid #262c76 !important;
+    display: block;
+    margin: -1px 0 0 -1px;
+    position: absolute;
+    width: 202px;
+    z-index: 1010;
+}
+
+header#grp-header #grp-navigation ul li.grp-collapse.grp-open > ul li {
+    border-bottom: 1px solid #262c76 !important;
+    border-top: 1px solid #262c76 !important;
+}
+
+.grp-user-options-container a img{
+    float: left;
+    padding-right: 10px;
+}

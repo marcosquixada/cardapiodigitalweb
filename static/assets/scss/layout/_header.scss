@@ -1,0 +1,168 @@
+// Header
+.navbar-gov,
+.navbar-menu {
+  @extend .navbar;
+  @extend .navbar-default;
+  @include border-radius(0);
+  border: none;
+  margin-bottom: 0;
+}
+
+.navbar-gov {
+  @extend .hidden-xs;
+}
+
+.navbar-menu .navbar-brand {
+  height: auto;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.navbar-gov {
+  background-color: $blue;
+  color: #fff;
+  .navbar-nav {
+    > li > a {
+      color: #fff;
+      &:hover,
+      &:focus {
+        color: #fff;
+        background-color: $blue-light;
+      }
+    }
+    > .open > a {
+      &,
+      &:hover,
+      &:focus {
+        background-color: $blue-light;
+        color: #fff;
+      }
+    }
+    .dropdown-toggle {
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+    .navbar-toggle:focus {
+      background-color: transparent;
+    }
+    img {
+      margin-right: 5px;
+    }
+  }
+  .btn-group {
+    padding: 12px 6px 12px 0;
+    line-height: 22px;
+    button:last-child {
+      margin-right: 3px;
+    }
+  }
+  .navbar-sec {
+    margin-right: 15px;
+  }
+  .navbar-accessibility {
+    min-width: 215px;
+    > li > a {
+      &:hover,
+      &:focus {
+        background-color: transparent;
+        color: $blue-lighter;
+      }
+    }
+  }
+}
+
+.navbar-menu {
+  background-color: $blue-light;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  .navbar-nav {
+    margin-top: 20px;
+    > li > a {
+      color: #fff;
+      text-transform: uppercase;
+      padding: 5px 8px;
+      &:hover,
+      &:focus {
+        color: darken(#fff, 20%);
+        background-color: transparent;
+      }
+    }
+    > .active > a {
+      color: $blue-lighter;
+      background-color: transparent;
+      &,
+      &:hover,
+      &:focus {
+        color: #fff;
+        background-color: $red-dark;
+      }
+    }
+  }
+
+  .navbar-toggle {
+      border: none;
+      background: transparent !important;
+      &:hover {
+          background: transparent !important;
+      }
+      .icon-bar {
+          background: #fff;
+          width: 22px;
+          @include text-shadow(1px 1px 0 rgba( #000, 0.3));
+          @include transition(all 0.3s ease-out 0.3s);
+      }
+      .top-bar {
+          @include transform(rotate(45deg));
+          @include transform-origin(10% 10%);
+      }
+      .middle-bar {
+          @include opacity(0);
+      }
+      .bottom-bar {
+          @include transform(rotate(-45deg));
+          @include transform-origin(10% 90%);
+      }
+      &.collapsed {
+          .top-bar {
+              @include transform(rotate(0));
+          }
+          .middle-bar {
+              @include opacity(1);
+          }
+          .bottom-bar {
+              @include transform(rotate(0));
+          }
+      }
+  }
+}
+
+.header-slider {
+  @extend .flexslider;
+  border: none;
+  margin-bottom: 0;
+
+  overflow: hidden;
+  height: 400px;
+
+  @media (max-width: $screen-sm-max) {
+    height: auto;
+  }
+
+  img {
+    // margin-top: -100px;
+  }
+}
+
+.header-news {
+  background-color: $red;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  a {
+    @extend blockquote;
+    display: inline-block;
+    font-size: $base-font-size - 2px;
+    color: #fff;
+    margin-bottom: 0;
+    border-left: 2px dotted #fff;
+  }
+}

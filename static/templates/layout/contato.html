@@ -1,0 +1,51 @@
+<main id="main" class="main main-page">
+  <section class="section-page section-contato">
+    <div class="container">
+      <breadcrumbs secao="'Contato'" subsecao="''"></breadcrumbs>
+      <div class="content-header">
+        <h2 class="title">
+          Contato
+        </h2>
+      </div>
+      <div class="content-body">
+
+        <div class="content-full">
+
+          <!-- <div class="acf-map" data-icon="{{contato.icon}}">
+            <div class="marker" data-lat="{{contato.lat}}" data-lng="{{contato.lng}}"></div>
+          </div> -->
+
+
+          <div class="acf-map">
+          <img src="/static/assets/images/mapa.png" alt="Mapa">
+          </div>
+      </div>
+      <div class="content-main">
+        <h3 class="title">Fale conosco</h3>
+        <form action="#" method="post">
+          <div class="form-group">
+            <label for="nome">Nome</label>
+            <input type="text" class="form-control" id="nome" placeholder="Nome">
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" placeholder="Email">
+          </div>
+          <div class="form-group">
+            <label for="messagem">Mensagem</label>
+            <textarea class="form-control" id="messagem" rows="3"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+      </div>
+      <div class="content-sidebar">
+        <h3 class="title">Localização</h3>
+        <address class="address">
+          <i class="fa fa-map-marker" aria-hidden="true"></i> {{contato.address}}<br>
+          <i class="fa fa-envelope" aria-hidden="true"></i> {{contato.email}}<br>
+          <i class="fa fa-phone" aria-hidden="true"></i> {{contato.phone}}
+        </address>
+      </div>
+    </div>
+  </section>
+</main>

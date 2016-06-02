@@ -1,0 +1,31 @@
+<div class="row">
+  <table border="1">
+    <tr>
+      <td>Unidade orçamentaria</td>
+      <td>Fonte Recurso</td>
+      <td>Programa Trabalho</td>
+      <td>PI</td>
+      <td>Natureza Despesa</td>
+      <td>Valor Inicial</td>
+      <td>Valor Empenhado</td>
+      <td>Valor Atualizado</td>
+      <td>Data Registro</td>
+    </tr>
+    <tr ng-repeat="execucao in vm.columns">
+      <td>{{execucao.id_unidade_orc}}</td>
+      <td>{{execucao.id_fonte_recurso}}</td>
+      <td>{{execucao.id_programa_trabalho}}</td>
+      <td>{{execucao.id_pi}}</td>
+      <td>{{execucao.elemento_despesa}}</td>
+      <td>{{execucao.vl_inicial}}</td>
+      <td>{{execucao.vl_empenhado}}</td>
+      <td>{{execucao.vl_atualizado}}</td>
+      <td>{{execucao.data_registro}}</td>
+    </tr>
+  </table>
+  <div ng-hide="vm.columns && vm.columns.length">
+    <div class="col-sm-12 no-items-here">
+      <em>The are no items here.</em>
+    </div>
+  </div>
+</div>

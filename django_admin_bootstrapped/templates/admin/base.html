@@ -1,0 +1,183 @@
+{% load admin_static bootstrapped_goodies_tags %}{% load url from future %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  {% block extrastyle %}{% endblock %}
+
+  {% if not debug %}
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css" />
+  {% else %}
+    <link rel="stylesheet" href="{% static 'bootstrap3/css/bootstrap.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'jquery/ui/jquery-ui.min.css' %}"/>
+  {% endif %}
+  <link rel="stylesheet" type="text/css" href="{% static 'admin/css/overrides.css' %}"/>
+  <style type="text/css">
+    body {
+      padding-bottom: 40px;
+    }
+    #header{
+      padding-bottom: 20px;
+    }
+  </style>
+
+  <script type="text/javascript">
+  //<![CDATA[
+      window.__admin_media_prefix__ = "{% filter escapejs %}{% static 'admin/' %}{% endfilter %}";
+  //]]>
+  </script>
+  <script src="{% static "admin/js/jquery.js" %}"></script> 
+  <script src="{% static "admin/js/jquery-migrate-1.2.1.min.js" %}"></script>
+  <script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
+  {% block extrahead %}{% endblock %}
+    
+
+  
+
+  {% if cl.model_admin.search_form %}
+    <script src="{% static 'django_autocomplete/js/autocomplete_base.js' %}"></script>
+    <script src="{% static 'django_autocomplete/js/autocomplete_search.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'django_autocomplete/css/autocomplete.css' %}"/>
+  {% endif %}
+
+  <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/styles.css' %}" />
+
+  {% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE" />{% endblock %}
+  <script type="text/javascript">
+  //<![CDATA[
+    (function($) {
+      $(document).ready(function() {
+        $('input[type="submit"]').addClass('btn');
+        //$('[title]').tooltip();
+      });
+    }(jQuery));
+  //]]>
+  </script>
+</head>
+{% load i18n %}
+
+<body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}">
+
+  {% if not is_popup %}
+  <header id="header" role="banner">
+      <nav class="navbar-gov">
+        <div class="container">
+
+          <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar top-bar"></span>
+                <span class="icon-bar middle-bar"></span>
+                <span class="icon-bar bottom-bar"></span>
+              </button>
+              <a class="navbar-brand" href="/">
+             <img src="/static/assets/images/logo-mq.png" />
+            </a>
+          </div>
+
+          {% block user-tools %}
+                {% if user.is_authenticated and user.is_staff %}
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                             <a id="dLabel" data-target="#" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                {% firstof user.get_short_name user.get_username %}
+                                <span class="caret"></span>
+                              </a>
+
+                              <ul class="dropdown-menu" aria-labelledby="dLabel">
+                                {% if user.has_usable_password %}
+                                    <li><a href="{% url 'admin:password_change' %}" class="grp-change-password">{% trans 'Change password' %}</a></li>
+                                {% endif %}
+                                <li><a href="{% url 'admin:logout' %}" class="grp-logout">{% trans 'Log out' %}</a></li>
+                                
+                              </ul>
+                        </li>
+                    </ul>
+                {% endif %}
+            {% endblock %}
+            {% block nav-global %}{% endblock %}
+        </div>
+      </nav>
+
+      <nav class="navbar-menu">
+        <div class="container">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar top-bar"></span>
+              <span class="icon-bar middle-bar"></span>
+              <span class="icon-bar bottom-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/" title="JáPedi" >
+            <img src="/static/assets/images/logo.png" alt="Logo">
+          </a>
+        </div>
+        <menu/>
+      </div>
+    </nav>
+    </header>
+    
+<!-- Container -->
+<div class="container-fluid">
+    <div class="row">
+          {% block sidebar %}{% endblock %}
+          {% block container-top %}{% endblock %}
+        
+             <!-- breadcrumbs -->
+              {% block breadcrumbs %}
+              {% endblock %}
+              {% endif %}
+
+          <!-- Content -->
+          <div id="content" class="{% block coltype %}colM{% endblock %}">
+
+            <div class="navbar navbar-default">
+              <div class="navbar-inner">
+                {% block pretitle %}{% endblock %}
+                {% block content_title %}
+                  {% if title %}
+                    <a class="navbar-brand">
+                      {% block navbar %}
+                         {% render_with_template_if_exist title|lower|add:"/admin_app_name.html" title %}
+                        {% block object-tools %}{% endblock %}
+                      {% endblock navbar %}
+                    </a>
+                  {% endif %}
+                {% endblock %}
+              </div>
+            </div>
+
+            
+
+            {% block messages %}
+            {% if messages %}
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="alert alert-success">
+                  <ul class="list-unstyled">
+                    {% for message in messages %}
+                      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+            {% endblock messages %}
+
+            {% block content %}{{ content }}{% endblock %}
+          </div>
+          <!-- END Content -->
+         {% block container-bottom %}{% endblock %}
+{% block footer %}<footer id="footer"></footer>{% endblock %}
+<!-- END Container -->
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,122 @@
+{% load admin_static %}
+<!-- LOADING -->
+{% load i18n grp_tags leal_tags log %}
+<div class="table-responsive"> 
+  <table class="table table-bordered"> 
+    <thead> 
+      <tr> 
+        <!-- <th>#</th>  -->
+        <th>FORMULÁRIO</th> 
+        <th>LOCAL</th> 
+        <th>PERIODO</th> 
+        <th>DOCUMENTO</th> 
+       <!--  <th>Table heading</th> 
+        <th>Table heading</th>  -->
+      </tr> 
+    </thead> 
+    <tbody> 
+      <tr class="page-break"> 
+        <!-- <th scope="row">1</th>  -->
+        <td>CONTROLE DE PRODUÇÃO</td> 
+        <td>{{ servico.obra }}</td> 
+        <td>{{ servico.periodo | upper }}</td> 
+        <td>{{ servico.codigo }}</td> 
+       <!--  <td>Table cell</td> 
+        <td>Table cell</td>  -->
+      </tr> 
+    </tbody> 
+  </table> 
+</div>
+
+<div class="table-responsive"> 
+  <table class="table table-bordered table-striped table-hover"> 
+    <caption>Descrição dos Serviços</caption>
+    <thead> 
+      <tr  class="page-break"> 
+        <!-- <th>#</th>  -->
+        <th>FUNÇÃO</th> 
+        <th>QTD</th> 
+        <th>DIAS PREV.</th> 
+        <th>DIAS EXE.</th> 
+        <th>PROD. / FUNCIONÁRIO</th> 
+        <th>PROD. / DIA</th> 
+        <th>PROD. TOTAL</th> 
+      </tr> 
+    </thead> 
+    <tbody> 
+    {% for cargo in cargos %}
+      {% funcionarios_cargo request servico cargo %}
+    {% endfor %}
+      <tr class="page-break">
+        <td colspan="6">&nbsp;</td>
+        <td>
+          <table class="table table-bordered">
+            <tr>
+              <td class="warning">TOTAL</td> 
+              <td><span class="badge">{{valor_total}}</span> </td>    
+            </tr>
+          </table>
+          
+        </td>
+      </tr>
+    </tbody> 
+  </table> 
+</div>
+
+<div class="table-responsive"> 
+  <table class="table table-bordered table-striped table-hover"> 
+    <caption>Acompanhamento Diário de Mão de Obra</caption>
+    <thead> 
+      <tr class="page-break-before"> 
+        <!-- <th>#</th>  -->
+        <th>FUNCIONÁRIO</th>
+        <th>FUNÇÃO</th> 
+        <th>PERÍODO</th> 
+      </tr> 
+    </thead> 
+    <tbody> 
+    {% for funcionario in servico.funcionarios.all %}
+      {% funcionarios_impressao request servico funcionario %}
+    {% endfor %}  
+    <tr>
+      <td colspan="3" align="right">* faltas não justificadas</td>
+    </tr>         
+    </tbody> 
+  </table> 
+</div>
+<div class="table-responsive">
+  <table class="table table-bordered table-striped table-hover page-break-before">
+    <caption>Cálculo de Produção</caption>
+    <tbody class="page-break-before">
+      <tr class"page-break-before">
+        <th>FUNCIONÁRIO</th>
+        <th>P</th>
+        <th>MP</th>
+        <th>F</th>
+        <th>R$ Efetivo</th>
+        <th>Desc Faltas</th>
+        <th>Valor para Rateio</th>
+        <th>Rateio</th>
+        <th>R$ Produção Final</th>
+      </tr>
+    </tbody>
+
+  {% for funcionario in servico.funcionarios.all %}
+   {% calculo_producao request servico funcionario %}
+  {% endfor %}
+  </table>
+</div>
+<div class="table-responsive">
+  <table class="table-bordered table">
+    <thead>
+      <tr class="page-break-before">
+        <th>PRODUÇÃO TOTAL DO SERVIÇO</th>
+        <th>PRODUÇÃO TOTAL PAGA</th>
+      </tr>
+    </thead>
+    <tr class="page-break">
+      <td>{{ valor_total }}</td>
+      <td>{{ valor_pago }}</td>
+    </tr>
+  </table>
+</div>

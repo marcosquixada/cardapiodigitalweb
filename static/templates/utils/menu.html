@@ -1,0 +1,5 @@
+<div class="collapse navbar-collapse" id="menu" ng-controller="IndexController">
+  <ul class="nav navbar-nav navbar-right">
+ 	<li class="{{activeMenu == section.title ? 'active':''}}" ng-repeat = "section in sections"><a href="/{{section.slug}}">{{section.title}}</a></li>
+  </ul>
+</div>

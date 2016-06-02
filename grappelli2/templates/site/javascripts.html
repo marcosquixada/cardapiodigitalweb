@@ -1,0 +1,77 @@
+{% load compress %}
+{% load staticfiles %}
+
+{% compress js %}
+
+<script type="text/javascript" src="{% static 'assets/js/vendor/jquery-ui-1.10.4.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/libs.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/main.min.js' %}"></script>
+
+
+<script type="text/javascript" src="{% static 'bower_components/angular/angular.js' %}"></script>
+<script type="text/javascript" src="{% static 'bower_components/angular-route/angular-route.js' %}"></script>
+<script type="text/javascript" src="{% static 'bower_components/angular-cookies/angular-cookies.js' %}"></script>
+<script type="text/javascript" src="{% static 'bower_components/angular-i18n/angular-locale_pt-br.js' %}"></script>
+<script type="text/javascript" src="{% static 'bower_components/Chart.js/Chart.js' %}"></script>
+
+<script src="http://code.highcharts.com/highcharts.src.js"></script>
+<script src="https://code.highcharts.com/highcharts-3d.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+<script type="text/javascript" src="{% static 'bower_components/highcharts-ng/dist/highcharts-ng.js' %}"></script>
+<script type="text/javascript" src="{% static 'bower_components/angular-chart.js/dist/angular-chart.js' %}"></script>
+<script type="text/javascript" src="{% static 'bower_components/select2/select2.js' %}"></script>
+<script type="text/javascript" src="{% static 'bower_components/angular-ui-select2/src/select2.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'bower_components/ngDialog/js/ngDialog.js' %}"></script>
+<script type="text/javascript" src="{% static 'lib/snackbarjs/snackbar.min.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'javascripts/jaPedi.js' %}"></script>
+<script type="text/javascript" src="{% static 'javascripts/jaPedi.config.js' %}"></script>
+<script type="text/javascript" src="{% static 'javascripts/jaPedi.routes.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'javascripts/layout/layout.module.js' %}"></script>
+<script type="text/javascript" src="{% static 'javascripts/layout/controllers/index.controller.js' %}"></script>
+<script type="text/javascript" src="{% static 'javascripts/layout/controllers/navbar.controller.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'javascripts/execucoes/execucoes.module.js' %}"></script>
+<script type="text/javascript" src="{% static 'javascripts/execucoes/services/execucoes.service.js' %}"></script>
+<script type="text/javascript" src="{% static 'javascripts/execucoes/directives/execucoes.directive.js' %}"></script>
+<script type="text/javascript" src="{% static 'javascripts/layout/directives/sidebar.directive.js' %}"></script>
+<script type="text/javascript" src="{% static 'javascripts/execucoes/directives/execucao.directive.js' %}"></script>
+<script type="text/javascript" src="{% static 'javascripts/execucoes/controllers/execucoes.controller.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'javascripts/publicacoes/publicacoes.module.js' %}"></script>
+<script type="text/javascript" src="{% static 'javascripts/publicacoes/services/publicacoes.service.js' %}"></script>
+<script type="text/javascript" src="{% static 'javascripts/publicacoes/directives/publicacoes.directive.js' %}"></script>
+<script type="text/javascript" src="{% static 'javascripts/publicacoes/directives/publicacao.directive.js' %}"></script>
+<script type="text/javascript" src="{% static 'javascripts/publicacoes/controllers/publicacoes.controller.js' %}"></script>
+
+
+<script type="text/javascript" src="{% static 'javascripts/unidades_orcamentarias/unidades_orcamentarias.module.js' %}"></script>
+<script type="text/javascript" src="{% static 'javascripts/unidades_orcamentarias/services/unidades_orcamentarias.service.js' %}"></script>
+<script type="text/javascript" src="{% static 'javascripts/orgaos/orgaos.module.js' %}"></script>
+<script type="text/javascript" src="{% static 'javascripts/orgaos/services/orgaos.service.js' %}"></script>
+<script type="text/javascript" src="{% static 'javascripts/fontes_recurso/fontes_recurso.module.js' %}"></script>
+<script type="text/javascript" src="{% static 'javascripts/fontes_recurso/services/fontes_recurso.service.js' %}"></script>
+<script type="text/javascript" src="{% static 'javascripts/localizacoes/localizacoes.module.js' %}"></script>
+<script type="text/javascript" src="{% static 'javascripts/localizacoes/services/localizacoes.service.js' %}"></script>
+<script type="text/javascript" src="{% static 'javascripts/programas_trabalho/programas_trabalho.module.js' %}"></script>
+<script type="text/javascript" src="{% static 'javascripts/programas_trabalho/services/programas_trabalho.service.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'javascripts/utils/utils.module.js' %}"></script>
+<script type="text/javascript" src="{% static 'javascripts/utils/directives/utils.directive.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'javascripts/utils/controllers/ajuda.controller.js' %}"></script>
+<script type="text/javascript" src="{% static 'javascripts/utils/controllers/contato.controller.js' %}"></script>
+<script type="text/javascript" src="{% static 'javascripts/utils/controllers/legislacao.controller.js' %}"></script>
+<script type="text/javascript" src="{% static 'javascripts/utils/controllers/sobre.controller.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'javascripts/utils/controllers/sophia.controller.js' %}"></script>
+<script type="text/javascript" src="{% static 'javascripts/utils/controllers/informativos.controller.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'javascripts/utils/services/snackbar.service.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'javascripts/utils/filters/titlecase.filters.js' %}"></script>
+
+{% endcompress %}

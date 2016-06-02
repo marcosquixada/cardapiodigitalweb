@@ -1,0 +1,174 @@
+{% extends "admin/base_site.html" %}
+
+<!-- LOADING -->
+{% load url from future %}
+{% load i18n admin_modify adminmedia grp_tags %}
+
+<!-- STYLESHEETS -->
+{% block stylesheets %}
+    {{ block.super }}
+{% endblock %}
+
+<!-- JAVASCRIPTS -->
+{% block javascripts %}
+    {{ block.super }}
+    {% url 'admin:jsi18n' as jsi18nurl %}
+    <script type="text/javascript" src="{{ jsi18nurl|default:'../../../jsi18n/' }}"></script>
+    <script src="{% admin_media_prefix %}js/grappelli/jquery.grp_inline.js" type="text/javascript"></script>
+    <script type="text/javascript" charset="utf-8">
+        (function($) {
+            $(document).ready(function() {
+            	$('.user-options').hide('fast');
+	  	      	$('#login').click(function() {
+	          	    $('.user-options').toggle(400);
+	          	    return false;
+	          	  });
+                grappelli.initDateAndTimePicker();
+                $( "#tabs" ).tabs();
+                $("div.container-flexible div.group").grp_collapsible_group();
+                $("div#content .collapse ").grp_collapsible({
+                    on_init: function(elem, options) {
+                        // open collapse (and all collapse parents) in case of errors
+                        if (elem.find("ul.errorlist").length > 0) {
+                            elem.removeClass("closed")
+                                .addClass("open");
+                            elem.parents(".collapse")
+                                .removeClass("closed")
+                                .addClass("open");
+                        }
+			
+			tipo = $('input:radio[name=tipo]:checked').val();
+			
+			if(tipo=='1'){
+			   $('#rowcells-1pessoa').show('fast');
+		           $('#rowcells-1empresa').hide();
+			   $('#rowcells-1errorsempresa').hide();	
+			}else if (tipo == '2'){
+			   $('#rowcells-1empresa').show('fast');
+		           $('#rowcells-1pessoa').hide();
+			   $('#rowcells-1errorspessoa').hide();
+			}
+			        }
+                });
+                var related_lookup_fields_fk = {% get_related_lookup_fields_fk adminform.model_admin %};
+                var related_lookup_fields_m2m = {% get_related_lookup_fields_m2m adminform.model_admin %};
+                var related_lookup_fields_generic = {% get_related_lookup_fields_generic adminform.model_admin %};
+                var autocomplete_fields_fk = {% get_autocomplete_lookup_fields_fk adminform.model_admin %};
+                var autocomplete_fields_m2m = {% get_autocomplete_lookup_fields_m2m adminform.model_admin %};
+                var autocomplete_fields_generic = {% get_autocomplete_lookup_fields_generic adminform.model_admin %};
+                
+            $('#id_tipo_0').click(function() {
+		    $('#rowcells-1pessoa').show('fast');
+		    $('#rowcells-1empresa').hide();
+		});
+
+		$('#id_tipo_1').click( function() {
+		    $('#rowcells-1empresa').show('fast');
+		    $('#rowcells-1pessoa').hide();
+		});
+
+		
+                $.each(related_lookup_fields_fk, function() {
+                    $("#id_" + this).grp_related_fk({lookup_url:"{% url 'grp_related_lookup' %}"});
+                });
+                $.each(related_lookup_fields_m2m, function() {
+                    $("#id_" + this).grp_related_m2m({lookup_url:"{% url 'grp_m2m_lookup' %}"});
+                });
+                $.each(related_lookup_fields_generic, function() {
+                    var content_type = "#id_" + this[0],
+                        object_id = "#id_" + this[1];
+                    $(object_id).grp_related_generic({content_type:content_type, object_id:object_id, lookup_url:"{% url 'grp_related_lookup' %}"});
+                });
+                $.each(autocomplete_fields_fk, function() {
+                    $("#id_" + this).grp_autocomplete_fk({
+                        lookup_url:"{% url 'grp_related_lookup' %}",
+                        autocomplete_lookup_url:"{% url 'grp_autocomplete_lookup' %}"
+                    });
+                });
+                $.each(autocomplete_fields_m2m, function() {
+                    $("#id_" + this).grp_autocomplete_m2m({
+                        lookup_url:"{% url 'grp_m2m_lookup' %}",
+                        autocomplete_lookup_url:"{% url 'grp_autocomplete_lookup' %}"
+                    });
+                });
+                $.each(autocomplete_fields_generic, function() {
+                    var content_type = "#id_" + this[0],
+                        object_id = "#id_" + this[1];
+                    $(object_id).grp_autocomplete_generic({
+                        content_type:content_type,
+                        object_id:object_id,
+                        lookup_url:"{% url 'grp_related_lookup' %}",
+                        autocomplete_lookup_url:"{% url 'grp_autocomplete_lookup' %}"
+                    });
+                });
+            });
+        })(django.jQuery);
+    </script>
+    {{ media }}
+{% endblock %}
+
+<!-- COLTYPE/BODYCLASS -->
+{% block bodyclass %}{{ opts.app_label }}-{{ opts.object_name.lower }} change-form{% endblock %}
+{% block content-class %}content-flexible{% endblock %}
+
+<!-- BREADCRUMBS -->
+{% block breadcrumbs %}
+    {% if not is_popup %}
+        <div id="breadcrumbs">
+        <section id="top_bar">						
+					<section id="main_menu">
+						<ul class="sf-menu">
+							<li><a href="../../">{% trans "Home" %}</a></li>
+             				<li><a href="#">Relatório</a></li>
+							<li><a href="#">{{title}}</a></li>
+        				</ul>
+        			</section>
+        </section>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+    <form action="" method="post" >{% csrf_token %}
+        <div>
+            
+            <fieldset class="module aligned">
+                <h2>{% trans 'Filtros' %}</h2>
+                    
+                    {% for field in form %}
+                        {% if forloop.first %}
+                            <div class="form-row">
+                               <div>{% trans 'Selecione os filtros que deseja aplicar para esse relatório!' %}</div>
+                           </div>
+                        {% endif %}
+                    	<div class="form-row">
+                            <div>
+                                {% if field.is_checkbox %}
+                                    {{ field }}{{ field.label_tag }}
+                                {% else %}
+                                    {{ field.label_tag }}
+                                    {% if field.is_readonly %}
+                                        <p>{{ field.contents }}</p>
+                                    {% else %}
+                                        {{ field }}
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                    	</div>
+                    {% empty %}
+                         <div class="form-row">
+                           <div>{% trans 'Não há filtros para esse relatório!' %}</div>
+                       </div>
+                    {% endfor %}
+               
+            </fieldset>
+            
+            <div class="submit-row" >
+                <input type="submit" value="{% trans 'Imprimir' %}" />
+            </div>
+
+        </div>
+    </form>
+</div>
+{% endblock %}

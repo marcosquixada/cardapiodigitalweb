@@ -1,0 +1,141 @@
+{% extends "admin/base_site.html" %}
+{% load admin_static %}
+<!-- LOADING -->
+{% load i18n grp_tags log relatorios%}
+
+{% block stylesheets %}
+        <link href="{% static "admin/css/bootstrap.min.css" %}" rel="stylesheet" type="text/css" media="screen" />
+{{ block.super }}
+{% endblock %}
+
+<!-- JAVASCRIPTS -->
+{% block javascripts %}
+    {{ block.super }}
+{% endblock %}
+
+<!-- COLTYPE/BODYCLASS-- >
+{% block bodyclass %}dashboard{% endblock %}
+{% block content-class %}content-grid{% endblock %}
+
+{% block navbar %}
+<ul class="nav navbar-nav navbar-inverse">
+{% for app in app_list %}
+
+<li class="dropdown" style="display:none">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+    {% ifequal app.name 'Auth'%}
+        Autenticação 
+    {% else %}
+        {% ifequal app.name 'Rh'%}
+            Recursos Humanos
+        {% else %}
+            {% ifequal app.name 'Report'%}
+                Relatórios
+            {% else %}
+             {% trans app.name %}
+            {% endifequal %}
+        {% endifequal %}
+    {% endifequal %}<b class="caret"></b>
+</a>
+
+<ul class="dropdown-menu" style="display:none">
+    {% ifequal app.name 'Report'%}
+        {% get_relatorios request %}
+    {% endifequal %}
+    {% for model in app.models %}
+    {% ifequal model.name 'Serviços' %}
+    {% else %}
+        {% ifequal model.name 'Presenças do Funcionarios'%}
+        {% else %}
+            {% ifequal model.name 'Periodos' %}
+            <li><a href="{{ model.admin_url }}">Serviços</a></li>
+            {% else %}
+                <li><a href="{{ model.admin_url }}">{{ model.name }}</a></li>
+            {% endifequal %}
+        {% endifequal %}
+    {% endifequal %}
+    {% endfor %}
+</ul>
+</li>
+{% endfor %} 
+</ul>
+{% endblock %}
+<!-- BREADCRUMBS -->
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+      <li class="active">Inicio</li>
+    </ol>
+{% endblock %}
+{% block content_title %}
+{% endblock %}
+
+<!-- CONTENT -->
+{% block content %}
+    <div class="container">
+    <div class="row">
+            {% for app in app_list %}
+                <div class="col-sm-6">
+                <div class="panel panel-default dashboard">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">
+                        {% ifequal app.name 'Auth'%}
+                            Autenticação 
+                        {% else %}
+                            {% ifequal app.name 'Rh'%}
+                                Recursos Humanos
+                            {% else %}
+                                {% ifequal app.name 'Report'%}
+                                    Relatórios
+                                {% else %}
+                                 {% trans app.name %}
+                                {% endifequal %}
+                            {% endifequal %}
+                        {% endifequal %}
+                    </h3>
+                  </div>
+                  <div class="panel-body">
+                    {% for model in app.models %}
+                        {% ifequal app.name 'Report'%}
+                            {% get_relatorios_menu request %}
+                        {% endifequal %}
+                        
+                            <div id="model-{{ model.object_name|lower }}">
+                                {% if model.admin_url %}
+                                    <a href="{{ model.admin_url }}"><strong>{{ model.name }}</strong></a>
+                                {% else %}
+                                    <strong>{{ model.name }}</strong>
+                                {% endif %}
+                                {% if model.add_url or model.admin_url %}
+
+                                <nav class="pull-right">
+                                  {% if model.add_url %} 
+                                        <a href="{{ model.add_url }}"><i class="fa fa-plus" aria-hidden="true"></i> {% trans "Add" %}</a>
+                                   {% endif %}
+                                        {% if model.admin_url %}
+                                        <a href="{{ model.admin_url }}"><i class="fa fa-align-justify" aria-hidden="true"></i> {% trans "Change" %}</a>
+                                   {% endif %}
+                                   </nav>
+                                {% endif %}
+                            </div>    
+                    {% endfor %}
+                  </div>
+                </div>
+            </div>
+            {% endfor %}
+        
+        {% block custom_views %}
+            {% if custom_list %}
+                <div class="grp-module" id="custom_views">
+                    <h2>{% trans 'Custom Views' %}</h2>
+                    {% for path, name in custom_list %}
+                        <div class="grp-row">
+                            <a href="{{ path }}"><strong>{{ name }}</strong></a>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endblock %}
+    </div>
+    </div>
+{% endblock %}
+

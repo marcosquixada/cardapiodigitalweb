@@ -1,0 +1,22 @@
+<tr> 
+  <td class="">{{ funcionario.nome|upper }}</td> 
+  <td>{{ funcionario.cargo|upper}}</td> 
+  <td>
+    <table class="table table-bordered table-condensed">
+      <thead>
+        <tr>
+          {% for data in datas %}
+            <th>{{ data }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          {% for presenca in presencas %}
+              {{ presenca|safe }}
+          {% endfor %}
+        </tr>
+      </tbody>
+    </table>
+  </td>
+</tr>
