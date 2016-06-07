@@ -1,0 +1,18 @@
+<table class="table table-striped">
+    <thead>
+    	<th>#</th>
+        <th>Mesa</th>
+        <th>Hora do chamado</th>
+        <th>Ação</th>
+    </thead>
+    <tbody>
+    	{% for alerta in alertas %}
+    		<tr>
+    			<th scope="row">{{  forloop.counter }}</th>
+    			<td>{{alerta.mesa}}</td>
+    			<td>{{alerta.created_at|date:"H:i:s"}}</td>
+    			<td><a href="#" onclick="setAtendimento({{alerta.id}})" class="btn btn-default">Marcar como atendido</td>
+    		</tr>
+    	{% endfor %}
+    </tbody>
+</table>

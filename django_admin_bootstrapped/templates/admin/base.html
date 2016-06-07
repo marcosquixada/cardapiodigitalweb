@@ -1,4 +1,5 @@
 {% load admin_static bootstrapped_goodies_tags %}{% load url from future %}
+{% load qr_tags %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
 <head>
@@ -34,7 +35,8 @@
   <script src="{% static "admin/js/jquery.js" %}"></script> 
   <script src="{% static "admin/js/jquery-migrate-1.2.1.min.js" %}"></script>
   <script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
-  {% block extrahead %}{% endblock %}
+
+ {% block extrahead %}{% endblock %}
     
 
   
@@ -172,6 +174,8 @@
             {% endblock messages %}
 
             {% block content %}{{ content }}{% endblock %}
+            {% block footheader %}{% endblock %}
+            
           </div>
           <!-- END Content -->
          {% block container-bottom %}{% endblock %}

@@ -59,6 +59,24 @@ class EstabelecimentoAdmin(SuperModelAdmin):
     return form
 
 
+
+
+class AlertaMesaAdmin(admin.ModelAdmin):
+  fieldsets = [('Dados Gerais',{'classes': ('grp-collapse grp-open',),
+                              'fields': [('mesa'),
+                                          ('atendido')
+                                    ],}),]
+  list_display = ['mesa','atendido','created_at','updated_at']
+  list_filter = ['created_at', 'atendido','mesa__mesa','mesa__estabelecimento__nome']
+
+  form = select2_modelform(AlertaMesa, attrs={'width': '250px'})
+
+  def get_queryset(self, request):
+    qs = super(AlertaMesaAdmin, self).get_queryset(request)
+    if request.user.is_superuser:
+      return qs
+    return qs.filter(mesa__estabelecimento__usuario=request.user)
+
 class PedidoAdmin(admin.ModelAdmin):
   fieldsets = [('Dados Gerais',{'classes': ('grp-collapse grp-open',),
                               'fields': [('mesa'),
@@ -79,4 +97,4 @@ class PedidoAdmin(admin.ModelAdmin):
 
 admin.site.register(Estabelecimento, EstabelecimentoAdmin)
 admin.site.register(Pedido, PedidoAdmin)
-
+admin.site.register(AlertaMesa, AlertaMesaAdmin)

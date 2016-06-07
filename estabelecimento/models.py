@@ -29,7 +29,7 @@ class Estabelecimento(models.Model):
 
     usuario = models.ForeignKey(User)
 
-    nome = models.CharField(max_length = 100)
+    nome = models.CharField('Nome do estabelecimento', max_length = 100)
     cnpj = models.CharField(max_length = 20)
 
 
@@ -66,6 +66,18 @@ class Mesa(models.Model):
 
     def __unicode__(self):
         return "%s"%(self.mesa)
+
+
+class AlertaMesa(models.Model):
+    mesa = models.ForeignKey(Mesa)
+    atendido = models.BooleanField()
+    created_at = models.DateTimeField(u'Data de Criação', auto_now_add = True)
+    updated_at = models.DateTimeField(u'Data de Atualização',auto_now = True)
+
+
+    class Meta:
+        verbose_name = 'Alerta da Mesa' 
+        verbose_name_plural = 'Alertas das Mesas'
 
 
 class FormaPagamento(models.Model):

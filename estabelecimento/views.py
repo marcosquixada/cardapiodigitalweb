@@ -3,12 +3,12 @@ from rest_framework.response import Response
 from rest_framework.status import HTTP_201_CREATED, \
     HTTP_400_BAD_REQUEST, HTTP_404_NOT_FOUND, HTTP_406_NOT_ACCEPTABLE
 from rest_framework.decorators import api_view
-from estabelecimento.models import Estabelecimento, Mesa, Pedido
+from estabelecimento.models import Estabelecimento, Mesa, Pedido, AlertaMesa
 from menu.models import Item, ItemPedido
 from estabelecimento.serializers import PaginatedEstabelecimentoSerializer,EstabelecimentoSerializer, PedidoSerializer, ItemPedidoSerializer
 from django.shortcuts import render_to_response
 from django.template import RequestContext,Context
-
+from django_datatables_view.base_datatable_view import BaseDatatableView
 
 
 @api_view(['POST','GET'])
@@ -79,6 +79,13 @@ def QrCode(request):
 	title = "QrCode das Mesas do Estabelecimento"
 	mesas = Mesa.objects.filter(estabelecimento__usuario = request.user)
 	return render_to_response('admin/qrcodes.html',locals(),context_instance=RequestContext(request))
+
+
+def Alertas(request):
+	title = "Alertas das mesas"
+	alertas = AlertaMesa.objects.filter(atendido = False)
+	return render_to_response('admin/alertas.html',locals(),context_instance=RequestContext(request))
+
 
 class EstabelecimentoViewSet(viewsets.ModelViewSet):
 	model = Estabelecimento
