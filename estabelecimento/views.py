@@ -8,8 +8,6 @@ from menu.models import Item, ItemPedido
 from estabelecimento.serializers import PaginatedEstabelecimentoSerializer,EstabelecimentoSerializer, PedidoSerializer, ItemPedidoSerializer
 from django.shortcuts import render_to_response
 from django.template import RequestContext,Context
-from django_datatables_view.base_datatable_view import BaseDatatableView
-
 
 @api_view(['POST','GET'])
 def CreateOrder(request, pk):
