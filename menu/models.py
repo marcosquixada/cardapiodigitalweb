@@ -55,6 +55,10 @@ class ItemPedido(models.Model):
     quantidade = models.IntegerField()
     status = models.IntegerField(choices=STATUS_ITEM, default=0)
 
+    created_at = models.DateTimeField(u'Data de Criação', auto_now_add = True)
+    updated_at = models.DateTimeField(u'Data de Atualização',auto_now = True)
+
+    
     class Meta:
         verbose_name = 'Item do pedido' 
         verbose_name_plural = 'Itens dos pedidos'

@@ -1,0 +1,24 @@
+<table class="table table-striped">
+    <thead>
+    	<th>#</th>
+        <th>Mesa</th>
+        <th>Categoria</th>
+        <th>Item</th>
+        <th>Quantidade</th>
+        <th>Hora do Pedido</th>
+        <th>Ação</th>
+    </thead>
+    <tbody>
+    	{% for item in itens %}
+    		<tr>
+    			<th scope="row">{{  forloop.counter }}</th>
+    			<td>{{item.pedido.mesa}}</td>
+                <td>{{item.item.categoria.nome}}</td>
+                <td>{{item.item.nome}}</td>
+                <td>{{item.quantidade}}</td>
+    			<td>{{item.created_at|date:"H:i:s"}}</td>
+    			<td><a href="#" onclick="setAtendimento({{item.id}})" class="btn btn-default">Marcar como atendido</a></td>
+    		</tr>
+    	{% endfor %}
+    </tbody>
+</table>
