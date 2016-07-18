@@ -115,11 +115,13 @@ DATE_INPUT_FORMATS = ('%d/%m/%Y','%Y-%m-%d')
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
-STATIC_URL = '/static/jaPedi/'
-STATIC_ROOT = '/var/www/html/jaPedi/staticfiles'
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'staticfiles/media/')
+MEDIA_URL = '/media/'
 
 STATICFILES_DIRS = (
-    "/var/www/html/jaPedi/staticfiles/",
+    os.path.join(BASE_DIR, 'static'),
 )
 
 STATICFILES_FINDERS = (

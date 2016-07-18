@@ -1,7 +1,7 @@
 from django.conf.urls import include, patterns, url
 
 from rest_framework_nested import routers
-
+from django.conf import settings
 from menu.views import ItemViewSet, ItemFilterViewSet, CategoriesViewSet, Orders
 from estabelecimento.views import EstabelecimentoViewSet, CreateOrder,ItemOrder, Order,QrCode, Alertas
 from jaPedi.views import IndexView
@@ -25,6 +25,7 @@ urlpatterns = patterns(
     url(r'create_order/(?P<pk>[0-9]+)$',CreateOrder),
 	url(r'order/(?P<pk>[0-9]+)$',Order),
 	url(r'item_order/(?P<order_pk>[0-9]+)/(?P<item_pk>[0-9]+)$',ItemOrder),
+    (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
     url(r'', include('django_autocomplete.urls')),
     url(r'^.*$', IndexView.as_view(), name='index'),
 )

@@ -7,6 +7,7 @@ class ItemAdmin(admin.ModelAdmin):
                               'fields': [('nome','valor'),
                                     	('ingredientes'),
                               			('categoria','tempo'),
+                              			('imagem')
                               			],}),]
 	
 	list_display = ['nome','categoria','valor','tempo']
@@ -31,7 +32,7 @@ class ItemPedidoAdmin(admin.ModelAdmin):
 	fieldsets = [('Dados',{'classes': ('grp-collapse grp-open',),
                               'fields': [('pedido','item'),
                                     	('quantidade'),
-                              			('status'),
+                              			('status')
                               			],}),]
 	
 	list_display = ['pedido','item','quantidade','status']

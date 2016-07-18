@@ -6,11 +6,13 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext,Context
 
 class ItemViewSet(viewsets.ModelViewSet):
-    queryset = Item.objects.order_by('-created_at')
-    pagination_serializer_class = PaginatedCardapioSerializer
-    serializer_class = ItemSerializer
+	queryset = Item.objects.order_by('-created_at')
+	pagination_serializer_class = PaginatedCardapioSerializer
+	serializer_class = ItemSerializer
+	paginate_by = None
+	paginate_by_param = None
 
-    def get_queryset(self):
+	def get_queryset(self):
 		order = self.request.query_params.get('order', None)
 		queryset = Item.objects.all()
 		if order is not None:
@@ -25,7 +27,9 @@ class ItemFilterViewSet(viewsets.ModelViewSet):
 	model = Item
 	pagination_serializer_class = PaginatedCardapioSerializer
 	serializer_class = ItemSerializer
-
+	paginate_by = None
+	paginate_by_param = None
+	
 	def get_queryset(self):
 		id = self.kwargs['id']
 		order = self.request.query_params.get('order', None)
@@ -41,10 +45,11 @@ class ItemFilterViewSet(viewsets.ModelViewSet):
     
 
 class CategoriesViewSet(viewsets.ModelViewSet):
-    queryset = Categoria.objects.filter(id__in=Item.objects.values("categoria_id").distinct).order_by('-nome')
-    pagination_serializer_class = PaginatedCategoriaSerializer
-    serializer_class = CategoriaSerializer
-
+	queryset = Categoria.objects.filter(id__in=Item.objects.values("categoria_id").distinct).order_by('-nome')
+	pagination_serializer_class = PaginatedCategoriaSerializer
+	serializer_class = CategoriaSerializer
+	paginate_by = None
+	paginate_by_param = None
 
 
 def Orders(request):

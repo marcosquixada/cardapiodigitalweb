@@ -7,6 +7,7 @@ class CategoriaSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Categoria
+        depth = 2
 
         fields = ('id', 'nome')
         read_only_fields = ('id', 'created_at', 'updated_at')
@@ -20,6 +21,7 @@ class IngredienteSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Ingrediente
+        depth = 2
 
         fields = ('id', 'nome')
         read_only_fields = ('id', 'created_at', 'updated_at')
@@ -36,8 +38,9 @@ class ItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Item
-
-        fields = ('id', 'nome', 'valor', 'categoria' ,'ingredientes', 'tempo','created_at', 'updated_at')
+        depth = 2
+        
+        fields = ('id', 'nome', 'valor', 'categoria' ,'ingredientes', 'tempo','imagem','created_at', 'updated_at')
         read_only_fields = ('id', 'created_at', 'updated_at')
 
     def get_validation_exclusions(self, *args, **kwargs):

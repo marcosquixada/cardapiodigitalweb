@@ -62,7 +62,7 @@ class Mesa(models.Model):
         ordering = ('position', )
 
     def qrcode(self):
-        return "http://localhost:8000/create_order/%s"%(self.id)
+        return "http://10.1.27.84:8000/create_order/%s"%(self.id)
 
     def __unicode__(self):
         return "%s"%(self.mesa)
@@ -105,7 +105,7 @@ class Pedido(models.Model):
         from menu.models import ItemPedido
 
         itens = ItemPedido.objects.filter(pedido = self).values_list('item__nome')
-        return ",".join([item[0] for item in itens])
+        return itens
 
     def total(self):
         from menu.models import ItemPedido
@@ -114,6 +114,13 @@ class Pedido(models.Model):
         for item in itens:
             total = total + float(item.item.valor * item.quantidade)
         return total
+
+    def categorias(self):
+        from menu.serializers import CategoriaSerializer
+        from menu.models import Categoria
+        categorias = Categoria.objects.filter(estabelecimento = self.mesa.estabelecimento)
+        serializer = CategoriaSerializer(categorias, many=True)
+        return serializer.data
 
     def formas_pagamento(self):
         from serializers import FormaPagamentoSerializer

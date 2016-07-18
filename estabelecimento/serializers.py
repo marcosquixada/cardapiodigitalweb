@@ -1,5 +1,5 @@
 from rest_framework import serializers, pagination
-from estabelecimento.models import Estabelecimento, Pedido, FormaPagamento
+from estabelecimento.models import Estabelecimento, Pedido, FormaPagamento, Mesa
 from menu.models import ItemPedido
 
 
@@ -18,6 +18,12 @@ class EstabelecimentoSerializer(serializers.ModelSerializer):
         return exclusions
 
 
+class MesaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Mesa
+        exclude = ('position','estabelecimento')
+
+
 class FormaPagamentoSerializer(serializers.ModelSerializer):
     
     class Meta:
@@ -33,11 +39,13 @@ class FormaPagamentoSerializer(serializers.ModelSerializer):
 
 
 class PedidoSerializer(serializers.ModelSerializer):
-    
+    mesa = MesaSerializer()
+
     class Meta:
         model = Pedido
+        depth = 2
 
-        fields = ('id', 'mesa','forma_pagamento','status','itens','total','formas_pagamento')
+        fields = ('id', 'mesa', 'status','itens','total','formas_pagamento','categorias')
         read_only_fields = ('id', 'created_at', 'updated_at')
 
     def get_validation_exclusions(self, *args, **kwargs):
@@ -50,6 +58,7 @@ class ItemPedidoSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = ItemPedido
+        depth = 2
 
         fields = ('id', 'pedido','item','quantidade')
         read_only_fields = ('id',)

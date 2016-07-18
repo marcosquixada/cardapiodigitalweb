@@ -18,7 +18,9 @@ def CreateOrder(request, pk):
 
 	if not Pedido.objects.filter(mesa = mesa, status= 0).exists():
 		pedido = Pedido.objects.create(mesa = mesa)
+		print pedido
 		serializer = PedidoSerializer(pedido)
+		print serializer.data
 		return Response(serializer.data)
 	else:
 		return Response(status=HTTP_406_NOT_ACCEPTABLE)
@@ -40,7 +42,7 @@ def Order(request, pk):
 		return Response(serializer.data)
 
 
-@api_view(['POST','GET','PUT'])
+@api_view(['POST','GET'])
 def ItemOrder(request, order_pk, item_pk):
 	try:
 		pedido = Pedido.objects.get(pk=order_pk)
@@ -55,7 +57,7 @@ def ItemOrder(request, order_pk, item_pk):
 	except ItemPedido.DoesNotExist:
 		item_pedido = ItemPedido.objects.create(pedido=pedido, item=item, quantidade=0)
 
-	if request.method == 'PUT':
+	'''if request.method == 'PUT':
 		serializer = ItemPedidoSerializer(item_pedido, data=request.data)
 		if serializer.is_valid():
 		    serializer.save()
@@ -68,9 +70,9 @@ def ItemOrder(request, order_pk, item_pk):
 			return Response(status=status.HTTP_204_NO_CONTENT)
 		else:
 			return Response(status=HTTP_406_NOT_ACCEPTABLE)
-	else:
-		serializer = ItemPedidoSerializer(item_pedido)
-		return Response(serializer.data)
+	else:'''
+	serializer = ItemPedidoSerializer(item_pedido)
+	return Response(serializer.data)
 
 
 def QrCode(request):

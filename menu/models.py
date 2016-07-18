@@ -12,6 +12,21 @@ STATUS_ITEM = (
     )
 
 
+def retira_acento_upload(a,b):
+        import re
+        import unicodedata
+        import inspect
+        from datetime import datetime
+        
+        l =  locals()
+        path = "%s/%s" % (unicodedata.normalize('NFKD', unicode(l['a'].__class__._meta.verbose_name_plural.lower())).encode('ascii', 'ignore'), datetime.now().year)
+    
+        ext = b.split('.')[-1] #pega ultima ocorrência do split
+        url = unicodedata.normalize('NFKD', b).encode('ascii', 'ignore')
+        url = re.sub(r'[^\w\d-]', '', url.replace(' ', '-').replace('--', '').lower())
+        return 'arquivos/%s/%s' % (path, url[:-4]+'.'+ext)
+
+
 class Categoria(models.Model):
     estabelecimento = models.ForeignKey(Estabelecimento)
     nome = models.CharField(max_length=100)
@@ -36,7 +51,7 @@ class Item(models.Model):
     valor = models.DecimalField(decimal_places = 2, max_digits = 10)
     ingredientes = models.ManyToManyField(Ingrediente)
     tempo = models.IntegerField(help_text="em horas")
-
+    imagem = models.ImageField(upload_to= retira_acento_upload, null=True, blank=True) 
     categoria = models.ForeignKey(Categoria)
 
     created_at = models.DateTimeField(auto_now_add=True)
