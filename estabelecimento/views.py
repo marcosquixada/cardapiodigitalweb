@@ -57,6 +57,9 @@ def ItemOrder(request, order_pk, item_pk):
 	except ItemPedido.DoesNotExist:
 		item_pedido = ItemPedido.objects.create(pedido=pedido, item=item, quantidade=0)
 
+	item_pedido.quantidade = request.POST.get("quantidade")
+	item_pedido.save()
+	
 	'''if request.method == 'PUT':
 		serializer = ItemPedidoSerializer(item_pedido, data=request.data)
 		if serializer.is_valid():
