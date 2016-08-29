@@ -7,7 +7,9 @@ from django.contrib.auth.models import User
 
 STATUS_PEDIDO = (
         (0,'Aberto'),
-        (1,'Fechado')
+        (1,'Fechado'),
+        (2,'Cancelado'),
+        (3,'Cliente Fechar Conta'),
     )
 
 
@@ -101,10 +103,16 @@ class Pedido(models.Model):
     created_at = models.DateTimeField(u'Data de Criação', auto_now_add = True)
     updated_at = models.DateTimeField(u'Data de Atualização',auto_now = True)
 
-    def itens(self):
+    def itens_(self):
         from menu.models import ItemPedido
 
         itens = ItemPedido.objects.filter(pedido = self).values_list('item__nome')
+        return itens
+
+    def itens(self):
+        from menu.models import ItemPedido
+
+        itens = ItemPedido.objects.filter(pedido = self)
         return itens
 
     def total(self):

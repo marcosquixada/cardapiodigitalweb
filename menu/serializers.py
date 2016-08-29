@@ -41,13 +41,12 @@ class ItemSerializer(serializers.ModelSerializer):
         depth = 2
         
         fields = ('id', 'nome', 'valor', 'categoria' ,'ingredientes', 'tempo','imagem','created_at', 'updated_at')
-        read_only_fields = ('id', 'created_at', 'updated_at')
+        read_only_fields = ('id', 'created_at', 'updated_at','estabelecimento')
 
     def get_validation_exclusions(self, *args, **kwargs):
         exclusions = super(ItemSerializer, self).get_validation_exclusions()
 
         return exclusions
-
 
 class PaginatedCardapioSerializer(pagination.PaginationSerializer):
     

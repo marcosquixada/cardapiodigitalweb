@@ -83,7 +83,7 @@ class PedidoAdmin(admin.ModelAdmin):
                                           ('status'),
                                           ('forma_pagamento')
                                     ],}),]
-  list_display = ['mesa','itens','status','forma_pagamento','created_at','updated_at']
+  list_display = ['mesa','itens_','status','forma_pagamento','created_at','updated_at']
   list_filter = ['created_at','mesa__mesa','mesa__estabelecimento__nome']
   form = select2_modelform(Pedido, attrs={'width': '250px'})
 

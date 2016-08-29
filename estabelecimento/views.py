@@ -5,7 +5,7 @@ from rest_framework.status import HTTP_201_CREATED, \
 from rest_framework.decorators import api_view
 from estabelecimento.models import Estabelecimento, Mesa, Pedido, AlertaMesa
 from menu.models import Item, ItemPedido
-from estabelecimento.serializers import PaginatedEstabelecimentoSerializer,EstabelecimentoSerializer, PedidoSerializer, ItemPedidoSerializer
+from estabelecimento.serializers import PaginatedEstabelecimentoSerializer,EstabelecimentoSerializer, PedidoSerializer, PedidoSmallSerializer, ItemPedidoSerializer
 from django.shortcuts import render_to_response
 from django.template import RequestContext,Context
 
@@ -31,12 +31,13 @@ def Order(request, pk):
 		pedido = Pedido.objects.get(pk=pk)
 	except Pedido.DoesNotExist:
 		return Response(status=HTTP_404_NOT_FOUND)
+
 	if request.method == 'PUT':
-		serializer = PedidoSerializer(pedido, data=request.data)
-		if serializer.is_valid():
+		serializer = PedidoSmallSerializer(pedido, data=request.data)
+		if serializer.is_valid():	
 		    serializer.save()
 		    return Response(serializer.data)
-		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+		return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
 	else:
 		serializer = PedidoSerializer(pedido)
 		return Response(serializer.data)
@@ -57,26 +58,35 @@ def ItemOrder(request, order_pk, item_pk):
 	except ItemPedido.DoesNotExist:
 		item_pedido = ItemPedido.objects.create(pedido=pedido, item=item, quantidade=0)
 
-	item_pedido.quantidade = request.POST.get("quantidade")
-	item_pedido.save()
-	
-	'''if request.method == 'PUT':
-		serializer = ItemPedidoSerializer(item_pedido, data=request.data)
+	if request.method == 'POST':
+		item_pedido.quantidade = int(item_pedido.quantidade) + int(request.POST.get("quantidade"))
+		item_pedido.save()
+		serializer = ItemPedidoSerializer(item_pedido)
+		return Response(serializer.data)
+
+	elif request.method == 'PUT':
+		serializer = ItemPedidoFullSerializer(item_pedido, data=request.data)
 		if serializer.is_valid():
 		    serializer.save()
 		    return Response(serializer.data)
-		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+		return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
 
 	elif request.method == 'DELETE':
-		if item_pedido.status != 0:
-			item_pedido.delete()
-			return Response(status=status.HTTP_204_NO_CONTENT)
-		else:
-			return Response(status=HTTP_406_NOT_ACCEPTABLE)
-	else:'''
-	serializer = ItemPedidoSerializer(item_pedido)
-	return Response(serializer.data)
+		item_pedido.delete()
+		return Response(status=HTTP_204_NO_CONTENT)
 
+@api_view(['GET'])
+def AlertaOrder(request, order_pk):
+	try:
+		pedido = Pedido.objects.get(pk=order_pk)
+	except Pedido.DoesNotExist:
+		return Response(status=HTTP_404_NOT_FOUND)
+
+	try:
+		AlertaMesa(mesa = pedido.mesa, atendido = False).save()
+		return Response(status=HTTP_201_CREATED)
+	except:
+		return Response(status=HTTP_400_BAD_REQUEST)
 
 def QrCode(request):
 	title = "QrCode das Mesas do Estabelecimento"
